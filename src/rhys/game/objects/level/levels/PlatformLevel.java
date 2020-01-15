@@ -1,21 +1,18 @@
-package rhys.game.objects.levels;
+package rhys.game.objects.level.levels;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import rhys.game.objects.GameLevel;
-import rhys.game.objects.Sprite;
-import rhys.game.objects.SpriteSheet;
-import rhys.game.objects.Tile;
-import rhys.game.objects.TileCoordinate;
-import rhys.game.objects.tiles.BasicSolidTile;
+import rhys.game.objects.level.GameLevel;
+import rhys.game.objects.sprite.Sprite;
+import rhys.game.objects.sprite.SpriteSheet;
+import rhys.game.objects.tile.Tile;
+import rhys.game.objects.tile.TileCoordinate;
+import rhys.game.objects.tile.tiles.BasicSolidTile;
 
 public class PlatformLevel extends GameLevel {
-
-	
-	
 	
 	public PlatformLevel(String path, TileCoordinate spawnPoint) {
 		super(path, spawnPoint);
@@ -34,7 +31,6 @@ public class PlatformLevel extends GameLevel {
 	}
 	
 	public Tile getTileFromColor(int color) {
-		
 		if(color==0xffB8D9E2) return skyTile;
 		//if(color==0xFFFF0000) return Tile.spawnTile;
 		//if(color==0xff202020) return Tile.consoleTile;	

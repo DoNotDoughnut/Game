@@ -1,4 +1,4 @@
-package rhys.game.objects;
+package rhys.game.objects.sprite;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
@@ -9,8 +9,6 @@ public class SpriteSheet {
 	private String path;
 	public final int width, height;
 	public int[] pixels;
-	
-	public static SpriteSheet playerBlue = new SpriteSheet("/rhys/game/resources/spritesheets/players/playerBlue.png", 7, 5, 32);
 	
 	public SpriteSheet(String path, int width, int height, int spriteSize) {
 		this.width=width*spriteSize;

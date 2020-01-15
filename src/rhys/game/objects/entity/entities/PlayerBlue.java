@@ -1,17 +1,14 @@
-package rhys.game.objects.entities;
-
-import java.util.Arrays;
+package rhys.game.objects.entity.entities;
 
 import rhys.game.main.Game;
 import rhys.game.main.GameRenderer;
-import rhys.game.objects.GameLevel;
-import rhys.game.objects.Hitbox;
-import rhys.game.objects.Mob;
-import rhys.game.objects.Sprite;
-import rhys.game.objects.SpriteSheet;
-import rhys.game.objects.Tile;
+import rhys.game.objects.entity.Hitbox;
+import rhys.game.objects.entity.Player;
+import rhys.game.objects.level.GameLevel;
+import rhys.game.objects.sprite.Sprite;
+import rhys.game.objects.sprite.SpriteSheet;
 
-@SuppressWarnings(value = { "unused" })
+
 public class PlayerBlue extends Player {
 	
 	public boolean walking = false, 
@@ -23,122 +20,123 @@ public class PlayerBlue extends Player {
 	public static Sprite playerBlue_idle = new PlayerBlueSprite(0, 3, 30),
 						 playerBlue_walk = new PlayerBlueSprite(1, 6, 5),
 						 playerBlue_kick = new PlayerBlueSprite(2, 3, 8),
-						 playerBlue_run = new PlayerBlueSprite(3, 7, 2);
+						 playerBlue_hurt = new PlayerBlueSprite(3, 3, 5),
+						 playerBlue_run = new PlayerBlueSprite(4, 7, 2);
 				  
 	
 	public PlayerBlue(GameLevel level, int x, int y) {
+		super();
 		this.level=level;
-		this.x=x;
-		this.y=y;
-		this.sprite=playerBlue_idle;
+		sprite = playerBlue_idle;
+		speed = 2;
 		hitbox = new Hitbox(this, x, y, 8, 15, 12, 10);
+		spawn();
 	}
 	
-	private float vDelta = 0, 
-				  rbDelta, 
-				  rbDegDelta = 2.5f, 
-				  gDelta = 0.25f;
+	private float vDelta = 0, gDelta = 0.25f;
 	
 	public void update() {
 		
 		int xO = 0, yO = 0;
 		
-		//if(timeSinceAnim<idleWait) //Animation wait timer
-		//	timeSinceAnim++;
+		boolean onGround = hitbox.bottomCollision(0, 1); //Checks if currently on the ground
 		
-		if(Game.keyInput.up) {
-			if(hitbox.bottomCollision(xO, yO)&&!(jumping||falling)) { // Start jump
+		speed = 2;
+		running = false;
+		
+		if(Game.keyInput.action&&!Game.guiManager.alive)
+			Game.guiManager.spawn();
+		else if(!Game.keyInput.action&&Game.guiManager.alive)
+			Game.guiManager.despawn();
+		
+		if(Game.keyInput.sprint&&walking) { // Sprint mechanics
+			running = true;
+			speed*=2;
+		}
+		
+		if(Game.keyInput.up) { // Jump
+			if(onGround&&!(jumping||falling)) { // Start jump
 				jumping = true;
-				vDelta = -4.5f;
-				rbDelta = vDelta;
+				if(running)
+					vDelta = -3.25f;
+				else
+					vDelta = -4.5f;
 			}
 		}
-		//if(Game.keyInput.down)
+		
+		if(Game.keyInput.down) { // Drop through platform
+			
+		}
+		
 		if(Game.keyInput.left) //Move left
-			xO--;
+			xO-=speed;
 		if(Game.keyInput.right) //Move right
-			xO++;
+			xO+=speed;
 		
 		//Movement commands below
 		
-		if(!hitbox.bottomCollision(xO, yO)&&!(jumping||falling)) //If the player is floating make them fall
-			startFall();
+		if(!onGround&&!(jumping||falling)) { //If the player is floating make them fall
+			falling = true;
+			vDelta = 0;
+		}
 			
-		if(jumping||falling) { //Jumping/Falling
-			if(hitbox.bottomCollision(xO, yO)) { // Stop fall
+		if(jumping||falling) { //Jumping / Falling math
+			
+			yO += vDelta;
+			if(vDelta<4.5f)
+				vDelta += gDelta;
+			else vDelta = 4.5f;
+			
+			if(!onGround&&hitbox.topCollision(xO, yO-1)&&!falling) { // If hit a block while jumping, start falling
+				falling = true;
+				vDelta = 0;
+			}
+			
+			if((jumping || falling)&&hitbox.bottomCollision(xO, (int) (yO+vDelta))) { // If on ground stop fall
+				while(!hitbox.bottomCollision(xO, yO+1)) 
+					yO++;
+				
 				jumping = false;
 				falling = false;
 			}
-			yO += vDelta;
-			vDelta += gDelta;
 			
-			if(hitbox.topCollision(xO, yO)&&!falling) //Hit a block while jumping
-				startFall();
+			
 			
 		}
 		
+		walking = (xO != 0); // Stop walking animation if not moving
 		
-		if(hitbox.bottomCollision(0, yO+4)&&!hitbox.bottomCollision(xO, yO)) {
-			while(!hitbox.bottomCollision(0, yO))
-				yO++;
-		}
-		
-		walking = (xO!=0); // Stop walking animation if not moving
-		
-		if(xO!=0||yO!=0)//Move player if its values have changed
+		if(xO!=0||yO!=0) //Move player if its values have changed
 			move(xO,yO);
 		
 	}
 	
-	private void startFall() {
-			falling = true;
-			vDelta = 0;
-			rbDelta = vDelta;
-	}
-
-	
-	
-	//private static int timeSinceAnim = 0, idleWait = 60;
-	
 	public void render(GameRenderer gg) {
+		if(alive) {
+			
+			// Kick > Crouch/Sprint > Walk > Idle
 		
-		// Kick > Crouch/Sprint > Walk > Idle
+			if(kicking)
+				sprite = playerBlue_kick;
+			else if(running)
+				sprite = playerBlue_run;
+			else if(walking||jumping)
+				sprite = playerBlue_walk;
+			else 
+				sprite = playerBlue_idle;
 		
-		/*if(kicking) {
-			
-			timeSinceAnim = 0;
-			sprite = playerBlue_kick;
-			
-		} else if(running) {
-			
-			timeSinceAnim = 0;
-			sprite = playerBlue_run;
-			
-		} else if(walking&&!(jumping||falling)) {
-			
-			timeSinceAnim = 0;
-			sprite = playerBlue_walk;
-			
-		} else if(timeSinceAnim==idleWait) {
-		
-			sprite = playerBlue_idle;
-			
-		} else {
-			
-			playerBlue_idle.setVariant(1);
-			sprite = playerBlue_idle;
-			
-		}*/
-		
-		//gg.renderMob(x, y, this, dir != 0);
-		hitbox.render(gg);
+			gg.renderPlayer(hitbox.getSpriteX(), hitbox.getSpriteY(), this, dir != 0);
+			//hitbox.renderHitbox(gg);
+		}
 	}
 }
 
 class PlayerBlueSprite extends Sprite {
 
+	public static SpriteSheet playerBlue = new SpriteSheet("/rhys/game/resources/spritesheets/players/playerBlue.png", 7, 5, 32);
+	
 	public PlayerBlueSprite(int y, int variants, int idleTime) {
-		super(SpriteSheet.playerBlue, 0, y, variants, 32, true, true, idleTime);
+		super(playerBlue, 0, y, variants, 32, true, true, idleTime);
 	}
 
 }

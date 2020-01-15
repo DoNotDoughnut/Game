@@ -1,17 +1,18 @@
-package rhys.game.objects;
+package rhys.game.objects.sprite;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Sprite {
-	
-	public static final int defaultSize = 16;
 
 	public final int size, totalSprites;
 	private int x,y, idleTime;
 	public int[] pixels;
 	private SpriteSheet sheet;
 	private boolean defaultScan, animated;
+	
+	public static final int defaultSize = 16;
+	
 	private static ArrayList<Sprite> animatedSprites = new ArrayList<>();
 	
 	public static Sprite boundSprite = new Sprite(0x45283C);
@@ -19,16 +20,21 @@ public class Sprite {
 	public static Sprite spawnSprite = new Sprite(0xFF0000);
 	public static Sprite consoleSprite = new Sprite(0x202020);
 	
-	
 	private static int tick = 0;
 	
 	public static void update() {
+		
 		if(tick < 65536)
 			tick++;
 		else
 			tick = 0;
-		for(Sprite spr : animatedSprites)
+		
+		for(Sprite spr : animatedSprites) {
+			
+			//Animation hooks here
+			
 			spr.setVariant(tick / spr.idleTime  % spr.totalSprites + 1);
+		}
 	}
 	
 	public Sprite(SpriteSheet sheet, int x, int y, int totalSprites, int size, boolean defaultScan, boolean animated, int idleTime) {
@@ -47,13 +53,6 @@ public class Sprite {
 		load(x, y);
 	}
 	
-	public Sprite(int color, int size) {
-		this.totalSprites=1;
-		this.size=size;
-		pixels = new int[size*size];
-		Arrays.fill(pixels, color);
-	}
-	
 	private void load(int inX, int inY) {
 		for (int y = 0; y < size; y++)
 			for (int x = 0; x < size; x++)
@@ -66,6 +65,13 @@ public class Sprite {
 	
 	public Sprite(SpriteSheet sheet, int x, int y) {
 		this(sheet, x, y, 1, defaultSize, true, false, 0);
+	}
+	
+	public Sprite(int color, int size) {
+		this.totalSprites=1;
+		this.size=size;
+		pixels = new int[size*size];
+		Arrays.fill(pixels, color);
 	}
 	
 	public Sprite(int color) {

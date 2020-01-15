@@ -1,14 +1,15 @@
-package rhys.game.objects;
+package rhys.game.objects.tile;
 
 import java.util.ArrayList;
 
 import rhys.game.input.GameMouseListener;
 import rhys.game.main.Game;
 import rhys.game.main.GameRenderer;
-import rhys.game.objects.tiles.BoundTile;
-import rhys.game.objects.tiles.ConsoleTile;
-import rhys.game.objects.tiles.SpawnTile;
-import rhys.game.objects.tiles.VoidTile;
+import rhys.game.objects.sprite.Sprite;
+import rhys.game.objects.tile.tiles.BoundTile;
+import rhys.game.objects.tile.tiles.ConsoleTile;
+import rhys.game.objects.tile.tiles.SpawnTile;
+import rhys.game.objects.tile.tiles.VoidTile;
 
 public class Tile {
 
@@ -45,7 +46,7 @@ public class Tile {
 	}
 	
 	public void render(int x, int y, GameRenderer gg) {
-		gg.renderTile(x << 4, y << 4, this);
+		gg.renderTile(x << 4, y << 4, this, false);
 	}
 	
 	public boolean isSolid() {

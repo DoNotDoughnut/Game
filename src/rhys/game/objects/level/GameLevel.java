@@ -28,15 +28,16 @@ public class GameLevel {
 		
 	}
 	
-	public void render(int xScroll, int yScroll, GameRenderer gg) {
-		gg.setOffset(xScroll, yScroll);
+	public void render(int xScroll, int yScroll, GameRenderer graphics) {
+		graphics.xOffset = xScroll;
+		graphics.yOffset = yScroll;
 		int x0 = xScroll >> 4,
-			x1 = (xScroll + gg.width + Tile.size) >> 4,
+			x1 = (xScroll + graphics.width + Tile.size) >> 4,
 			y0 = yScroll >> 4,
-			y1 = (yScroll + gg.height + Tile.size) >> 4;		
+			y1 = (yScroll + graphics.height + Tile.size) >> 4;		
 			for(int y = y0; y < y1; y++)
 				for(int x = x0; x < x1; x++)
-					getTileFromCoordinates(x,y).render(x, y, gg);
+					getTileFromCoordinates(x,y).render(x, y, graphics);
 	}
 	
 	public Tile getTileFromCoordinates(int x, int y) {

@@ -1,4 +1,4 @@
-package rhys.game.objects;
+package rhys.game.objects.tile;
 
 public class TileCoordinate {
 	
