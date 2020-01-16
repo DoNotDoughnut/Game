@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class Sprite {
 
-	public final int size, totalSprites;
+	public final int width, height, totalSprites;
 	private int x,y, idleTime;
 	public int[] pixels;
 	private SpriteSheet sheet;
@@ -37,13 +37,14 @@ public class Sprite {
 		}
 	}
 	
-	public Sprite(SpriteSheet sheet, int x, int y, int totalSprites, int size, boolean defaultScan, boolean animated, int idleTime) {
+	public Sprite(SpriteSheet sheet, int x, int y,  int width, int height, int totalSprites, boolean defaultScan, boolean animated, int idleTime) {
 		this.sheet=sheet;
 		this.x=x;
 		this.y=y;
+		this.width=width;
+		this.height=width;
 		this.totalSprites=totalSprites;
-		this.size = size;
-		pixels = new int[size*size];
+		pixels = new int[width*height];
 		this.defaultScan=defaultScan;
 		this.animated=animated;
 		if(this.animated)
@@ -54,28 +55,29 @@ public class Sprite {
 	}
 	
 	private void load(int inX, int inY) {
-		for (int y = 0; y < size; y++)
-			for (int x = 0; x < size; x++)
-				pixels[x+y*size] = sheet.pixels[(x+inX*size)+(y+inY*size)*sheet.width];
+		for (int y = 0; y < height; y++)
+			for (int x = 0; x < width; x++)
+				pixels[x+y*width] = sheet.pixels[(x+inX*width)+(y+inY*height)*sheet.width];
 	}
 	
-	public Sprite(SpriteSheet sheet, int x, int y, int variants) {
-		this(sheet, x, y, variants, defaultSize, true, false, 0);
+	public Sprite(SpriteSheet sheet, int x, int y, int size, int totalSprites) {
+		this(sheet, x, y, size, size, totalSprites, true, false, 0);
 	}
 	
-	public Sprite(SpriteSheet sheet, int x, int y) {
-		this(sheet, x, y, 1, defaultSize, true, false, 0);
+	public Sprite(SpriteSheet sheet, int x, int y, int totalSprites) {
+		this(sheet, x, y, defaultSize, defaultSize, totalSprites, true, false, 0);
 	}
 	
-	public Sprite(int color, int size) {
+	public Sprite(int color, int width, int height) {
 		this.totalSprites=1;
-		this.size=size;
-		pixels = new int[size*size];
+		this.width=width;
+		this.height=height;
+		pixels = new int[width*height];
 		Arrays.fill(pixels, color);
 	}
 	
 	public Sprite(int color) {
-		this(color, defaultSize);
+		this(color, defaultSize, defaultSize);
 	}
 	
 	public void setVariant(int variant, boolean onX) {
@@ -96,9 +98,9 @@ public class Sprite {
 	
 	public Sprite getVariant(int variant) {
 		if(defaultScan)
-			return new Sprite(sheet, x+(variant-1), y, 1, size, defaultScan, animated, idleTime);
+			return new Sprite(sheet, x+(variant-1), y, width, height, 1, defaultScan, animated, idleTime);
 		else
-			return new Sprite(sheet, x, y+(variant-1), 1, size, defaultScan, animated, idleTime);
+			return new Sprite(sheet, x, y+(variant-1), width, height, 1, defaultScan, animated, idleTime);
 	}
 
 }

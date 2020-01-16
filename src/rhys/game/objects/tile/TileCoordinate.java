@@ -1,21 +1,29 @@
 package rhys.game.objects.tile;
 
+import rhys.game.objects.level.GameLevel;
+
 public class TileCoordinate {
 	
-	public final int x,y;
-	public Tile tile;
 	
-	public TileCoordinate(Tile tile, int x, int y) {
-		this.tile=tile;
-		this.x=x * Tile.size;
-		this.y=y * Tile.size;
-		Tile.tileUpdateList.add(this);
-		
-	}
+	public int x, y, xp, yp;
 
 	public TileCoordinate(int x, int y) {
-		this.x=x * Tile.size;
-		this.y=y * Tile.size;
+		this.xp=x * Tile.size;
+		this.yp=y * Tile.size;
+	}
+	
+	public Tile getTile(GameLevel level) {
+		return level.getTileFromCoordinates(xp, yp);
+	}
+	
+	public void setX(int x) {
+		this.x = x;
+		xp = x * Tile.size;
+	}
+	
+	public void setY(int y) {
+		this.y = y;
+		yp = y * Tile.size;
 	}
 	
 	

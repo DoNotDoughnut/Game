@@ -14,8 +14,10 @@ import rhys.game.objects.tile.tiles.BasicSolidTile;
 
 public class PlatformLevel extends GameLevel {
 	
-	public PlatformLevel(String path, TileCoordinate spawnPoint) {
-		super(path, spawnPoint);
+	public static GameLevel level = new PlatformLevel();
+	
+	public PlatformLevel() {
+		super("/rhys/game/resources/levels/platformLevel.png", new TileCoordinate(3,12));
 	}
 
 	protected void loadLevel(String path) {

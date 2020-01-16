@@ -1,12 +1,13 @@
 package rhys.game.objects.entity.entities;
 
 import rhys.game.main.GameRenderer;
-import rhys.game.objects.entity.MapEntity;
+import rhys.game.objects.entity.Entity;
 import rhys.game.objects.entity.Mob;
 
-public class ScreenFocus extends MapEntity {
+public class ScreenFocus extends Entity {
 
 	private Mob focus;
+	public int x, y;
 	
 	public ScreenFocus(Mob focus) {
 		super();

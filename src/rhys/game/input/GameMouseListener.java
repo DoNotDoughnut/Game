@@ -5,28 +5,28 @@ import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
 import rhys.game.main.Game;
+import rhys.game.main.GameRenderer;
 
 public class GameMouseListener implements MouseListener, MouseMotionListener {
-
-	private static int mouseX = -1, mouseY = -1, mouseB = -1;
 	
-	public static int getX() {
+	public GameRenderer graphics;
+	
+	public int clickX = -1, clickY = -1, releaseX = -1, releaseY = -1, mouseX = -1, mouseY = -1;
+	public boolean clicking = false;
+	
+	public GameMouseListener(GameRenderer graphics) {
+		this.graphics=graphics;
+	}
+	
+	public int getX() {
 		return mouseX/Game.scale;
 	}
 	
-	public static int getY() {
+	public int getY() {
 		return mouseY/Game.scale;
 	}
 	
-	public static int getButton() {
-		return mouseB;
-	}
-	
-	public static void resetButton() {
-		mouseB = -1;
-	}
-	
-	public void mouseDragged(MouseEvent e) {
+	public void mouseDragged(MouseEvent e) { //Pretty much "while(clicking)"
 		
 	}
 
@@ -43,12 +43,16 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 
 	
 	public void mousePressed(MouseEvent e) {
-		mouseB = e.getButton();
+		clickX = e.getX();
+		clickY = e.getY();
+		clicking = true;
 	}
 
 	
 	public void mouseReleased(MouseEvent e) {
-		mouseB = -1;
+		releaseX = e.getX();
+		releaseY = e.getY();
+		clicking = false;
 	}
 
 	

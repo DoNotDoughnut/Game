@@ -1,23 +1,16 @@
 package rhys.game.objects.level.levels;
 
-import java.awt.image.BufferedImage;
-import java.io.IOException;
-
-import javax.imageio.ImageIO;
-
 import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.sprite.Sprite;
-import rhys.game.objects.sprite.SpriteSheet;
-import rhys.game.objects.tile.Tile;
-import rhys.game.objects.tile.TileCoordinate;
-import rhys.game.objects.tile.tiles.BasicSolidTile;
-import rhys.game.objects.tile.tiles.FountainTile;
-import rhys.game.objects.tile.tiles.WaterTile;
+import rhys.game.objects.sprite.*;
+import rhys.game.objects.tile.*;
+import rhys.game.objects.tile.tiles.*;
 
 public class LevelT1 extends GameLevel {
 	
 	public static Sprite grassSprite = new LevelT1Sprites(0,0);
 	public static Sprite pathSprite = new LevelT1Sprites(1,0);
+	
+	public static Tile consoleTile = new ConsoleTile(Sprite.consoleSprite);
 	
 	public static Sprite stoneWallFrontSprite = new LevelT1Sprites(2,0);
 	public static Sprite stoneWallLeftSprite = new LevelT1Sprites(2,1);
@@ -69,28 +62,12 @@ public class LevelT1 extends GameLevel {
 	public static Tile wallBottomTile = new BasicSolidTile(wallBottomSprite);
 	public static Tile wallRightBottomTile = new BasicSolidTile(wallRightBottomSprite);
 	
-	public LevelT1(String path, TileCoordinate spawnPoint) {
-		super(path, spawnPoint);
-	}
-
-	protected void loadLevel(String path) {
-		try {
-			BufferedImage image = ImageIO.read(LevelT1.class.getResource(path));
-			width = image.getWidth();
-			height = image.getHeight();
-			tiles = new int[width*height];
-			image.getRGB(0,0,width,height,tiles,0,width);
-			
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.out.println("Could not load file");
-		}
+	public LevelT1() {
+		super("/rhys/game/resources/levels/fountainLevel.png", new TileCoordinate(12,33));
 	}
 	
 	public Tile getTileFromColor(int color) {
 		if(color==0xffffffff) return Tile.voidTile;
-		if(color==0xFFFF0000) return Tile.spawnTile;
 		if(color==0xff00ff00) return grassTile;
 		if(color==0xff000000) return pathTile;
 		
@@ -102,7 +79,7 @@ public class LevelT1 extends GameLevel {
 		
 		if(color==0xff0000ff) return waterTile;
 		if(color==0xff1010ff) return fountainTile;
-		if(color==0xff202020) return Tile.consoleTile;
+		if(color==0xff202020) return consoleTile;
 		
 		if(color==0xff000001) return wallLeftTopTile;
 		if(color==0xff000002) return wallTopTile;

@@ -1,9 +1,11 @@
 package rhys.game.objects.entity.entities;
 
-import rhys.game.main.Game;
+import rhys.game.input.GameKeyListener;
+import rhys.game.input.GameMouseListener;
 import rhys.game.main.GameRenderer;
 import rhys.game.objects.entity.Hitbox;
 import rhys.game.objects.entity.Player;
+import rhys.game.objects.gui.GUIManager;
 import rhys.game.objects.level.GameLevel;
 import rhys.game.objects.sprite.Sprite;
 import rhys.game.objects.sprite.SpriteSheet;
@@ -24,12 +26,12 @@ public class PlayerBlue extends Player {
 						 playerBlue_run = new PlayerBlueSprite(4, 7, 2);
 				  
 	
-	public PlayerBlue(GameLevel level, int x, int y) {
-		super();
+	public PlayerBlue(GameLevel level, GameKeyListener keyInput, GameMouseListener mouseInput, GUIManager gui,  int x, int y, int pW, int pH, int pWO, int pHO) {
+		super(keyInput, mouseInput, gui);
 		this.level=level;
 		sprite = playerBlue_idle;
 		speed = 2;
-		hitbox = new Hitbox(this, x, y, 8, 15, 12, 10);
+		hitbox = new Hitbox(this, x, y, pW, pH, pWO, pHO);
 		spawn();
 	}
 	
@@ -44,17 +46,15 @@ public class PlayerBlue extends Player {
 		speed = 2;
 		running = false;
 		
-		if(Game.keyInput.action&&!Game.guiManager.alive)
-			Game.guiManager.spawn();
-		else if(!Game.keyInput.action&&Game.guiManager.alive)
-			Game.guiManager.despawn();
+		if(keyInput.action&&!gui.isAlive(0))
+			gui.panels.get(0).spawn();
 		
-		if(Game.keyInput.sprint&&walking) { // Sprint mechanics
+		if(keyInput.sprint&&walking) { // Sprint mechanics
 			running = true;
 			speed*=2;
 		}
 		
-		if(Game.keyInput.up) { // Jump
+		if(keyInput.up) { // Jump
 			if(onGround&&!(jumping||falling)) { // Start jump
 				jumping = true;
 				if(running)
@@ -64,13 +64,13 @@ public class PlayerBlue extends Player {
 			}
 		}
 		
-		if(Game.keyInput.down) { // Drop through platform
+		if(keyInput.down) { // Drop through platform
 			
 		}
 		
-		if(Game.keyInput.left) //Move left
+		if(keyInput.left) //Move left
 			xO-=speed;
-		if(Game.keyInput.right) //Move right
+		if(keyInput.right) //Move right
 			xO+=speed;
 		
 		//Movement commands below
@@ -125,7 +125,7 @@ public class PlayerBlue extends Player {
 			else 
 				sprite = playerBlue_idle;
 		
-			gg.renderPlayer(hitbox.getSpriteX(), hitbox.getSpriteY(), this, dir != 0);
+			gg.render(hitbox.getSpriteX(), hitbox.getSpriteY(), this.sprite, dir != 0);
 			//hitbox.renderHitbox(gg);
 		}
 	}
@@ -136,7 +136,7 @@ class PlayerBlueSprite extends Sprite {
 	public static SpriteSheet playerBlue = new SpriteSheet("/rhys/game/resources/spritesheets/players/playerBlue.png", 7, 5, 32);
 	
 	public PlayerBlueSprite(int y, int variants, int idleTime) {
-		super(playerBlue, 0, y, variants, 32, true, true, idleTime);
+		super(playerBlue, 0, y, 32, 32, variants, true, true, idleTime);
 	}
 
 }

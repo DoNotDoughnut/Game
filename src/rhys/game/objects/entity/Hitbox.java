@@ -36,23 +36,23 @@ public class Hitbox {
 	}
 	
 	public boolean bottomCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x 		  ) / Tile.size, (y + yO + height - 1) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width-1) / Tile.size, (y + yO + height - 1) / Tile.size).isSolid());
+		return(owner.level.getTileFromCoordinates((x 		  ) / Tile.size, (y + yO + height) / Tile.size).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + width) / Tile.size, (y + yO + height) / Tile.size).isSolid());
 	}
 	
 	public boolean rightCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x + width - 1 + xO) / Tile.size, (y 	    	 ) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width - 1 + xO) / Tile.size, (y + height-1) / Tile.size).isSolid() );
+		return(owner.level.getTileFromCoordinates((x + width + xO) / Tile.size, (y 	    	 ) / Tile.size).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + width + xO) / Tile.size, (y + height) / Tile.size).isSolid() );
 	}
 	
 	public boolean topCollision(int xO, int yO) {
 		return(owner.level.getTileFromCoordinates((x	      ) / Tile.size, (y + yO) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width-1) / Tile.size, (y + yO) / Tile.size).isSolid() );
+			   owner.level.getTileFromCoordinates((x + width) / Tile.size, (y + yO) / Tile.size).isSolid() );
 	}
 	
 	public boolean leftCollision(int xO, int yO) {
 		return(owner.level.getTileFromCoordinates((x + xO) / Tile.size, (y		     ) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + xO) / Tile.size, (y + height-1) / Tile.size).isSolid() );
+			   owner.level.getTileFromCoordinates((x + xO) / Tile.size, (y + height) / Tile.size).isSolid() );
 	}
 	
 	public boolean collisionAny(int xO, int yO) {
@@ -61,8 +61,8 @@ public class Hitbox {
 
 	
 	public void renderHitbox(GameRenderer gg) {
-		for (int y = this.y; y < this.y+height; y++) {
-			for (int x = this.x; x < this.x+width; x++) {
+		for (int y = this.y; y <= this.y+height; y++) {
+			for (int x = this.x; x <= this.x+width; x++) {
 				
 				int xx = x - gg.xOffset, 
 					yy = y - gg.yOffset;
@@ -77,11 +77,11 @@ public class Hitbox {
 	}
 
 	public int getSpriteX() {
-		return x-wOffset;
+		return x-wOffset+1;
 	}
 	
 	public int getSpriteY() {
-		return y-hOffset;
+		return y-hOffset+1;
 	}
 
 }

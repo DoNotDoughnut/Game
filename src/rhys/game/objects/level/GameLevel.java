@@ -1,23 +1,47 @@
 package rhys.game.objects.level;
 
+import java.awt.image.BufferedImage;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import rhys.game.main.GameRenderer;
+import rhys.game.objects.level.levels.LevelT1;
 import rhys.game.objects.tile.Tile;
 import rhys.game.objects.tile.TileCoordinate;
 
 public class GameLevel {
 
 	public int width, height;
-	protected int[] tiles;
-	public TileCoordinate spawnPoint;
+	protected int[] tiles; //Tiles, stored in a color map
+	protected String path;
+	public final TileCoordinate spawnPoint;
 
-	public GameLevel(String path, TileCoordinate spawnPoint) {
-		loadLevel(path);
+	public GameLevel(TileCoordinate spawnPoint) {
 		this.spawnPoint = spawnPoint;
+		loadLevel();
 		generateLevel();
 	}
 	
-	protected void loadLevel(String path) {
-
+	public GameLevel(String path, TileCoordinate spawnPoint) {
+		this.path=path;
+		this.spawnPoint = spawnPoint;
+		loadLevel();
+		generateLevel();
+		
+	}
+	
+	protected void loadLevel() {
+		try {
+			BufferedImage image = ImageIO.read(LevelT1.class.getResource(path));
+			width = image.getWidth();
+			height = image.getHeight();
+			tiles = new int[width*height];
+			image.getRGB(0,0,width,height,tiles,0,width);			
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.out.println("Could not load level's image file");
+		}
 	}
 
 	protected void generateLevel() {
@@ -47,7 +71,6 @@ public class GameLevel {
 	
 	public Tile getTileFromColor(int color) {
 		return Tile.voidTile;
-	}
-	
+	}	
 
 }

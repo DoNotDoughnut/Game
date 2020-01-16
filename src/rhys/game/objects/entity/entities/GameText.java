@@ -9,64 +9,78 @@ import java.awt.RenderingHints;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-
 import rhys.game.main.Game;
-import rhys.game.objects.entity.MapEntity;
+import rhys.game.objects.entity.Entity;
 
-public class GameText extends MapEntity {
+public class GameText extends Entity {
 
+	public int x, y;
 	public String text;
+	public Color color;
+	public Font font;
+	public final int id;
+	public boolean precise;
 	
-	public static Font font;
-	private static File ttf = new File(System.getProperty("user.dir")+"/src/rhys/game/resources/fonts/monogram.ttf");
+	private static Font basicFont;
+	public static Font dialogueFont, guiFont;
 	private static ArrayList<GameText> texts = new ArrayList<>();
-	private Color color;
+	private static int ids = 0;
 	
-	//public static GameText exampleText = new GameText(Game.graphics.width/2-10, Game.graphics.height/2-12, "hello", Color.black);
-	
-	public GameText(int x, int y, String text, Color color) {
+	public GameText(int x, int y, Font font, Color color, String text, boolean precise) {
 		this.x=x;
 		this.y=y;
-		this.text=text;
+		this.font=font;
 		this.color=color;
+		this.text=text;
+		this.precise=precise;
+		
+		this.id = ids;
+		texts.add(id, null);
+		ids++;
 	}
 	
-	public void updateGUI(boolean isAlive) {
-		if(!isAlive)
-			despawn();
+	public GameText(int x, int y, Font font, Color color, String text) {
+		this(x,y,font,color,text,false);
+		
 	}
 	
 	public void spawn() {
-		texts.add(this);
+		texts.set(id, this);
 		alive = true;
 	}
 	
 	public void despawn() {
-		texts.clear();
+		texts.set(id, null);
 		alive = false;
 	}
 
 	public static void init() {
+		
 		try {
-			font = Font.createFont(Font.TRUETYPE_FONT, ttf);
-			font = font.deriveFont(24F);
-		} catch (FontFormatException | IOException e) {
-				e.printStackTrace();
-		}
-		System.out.println("Loaded font.");
+			basicFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/rhys/game/resources/fonts/monogram.ttf"));			
+		} catch (FontFormatException | IOException e) {e.printStackTrace();}
+		
+		guiFont = basicFont.deriveFont((float) (12*Game.scale));
+		dialogueFont = basicFont.deriveFont((float) (16*Game.scale));
+		
 	}
 
 	public static void render(Graphics graphics) {
 		
 		Graphics2D g = (Graphics2D) graphics;
-		
 		g.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		g.setFont(font);
 		
-		for(GameText text : texts) {
+		for(GameText text : texts)
+			if(text!=null) {
+				
+			g.setFont(text.font);
 			g.setColor(text.color);
-			g.drawString(text.text, (text.x*Game.scale), (text.y*Game.scale));
-		}
+			if(text.precise)
+				g.drawString(text.text, text.x, text.y);
+			else
+				g.drawString(text.text, (text.x*Game.scale), (text.y*Game.scale));
+			
+			}
 		
 	}
 	

@@ -3,29 +3,41 @@ package rhys.game.objects.gui;
 import java.util.ArrayList;
 
 import rhys.game.main.GameRenderer;
-import rhys.game.objects.entity.Entity;
 
-public class GUIManager extends Entity {
+public class GUIManager {
 	
-	private ArrayList<GUIPanel> panels;
+	public ArrayList<GUIPanel> panels;
 	
 	public GUIManager() {
-		super();
 		panels = new ArrayList<>();
 	}
 	
 	public void update() {
 		for(GUIPanel panel : panels)
-			panel.update();
+			if(panel.alive)
+				panel.update();
 	}
 	
 	public void render(GameRenderer graphics) {
-		if(alive)
-			for(GUIPanel panel : panels)
+		for(GUIPanel panel : panels)
+			if(panel.alive)
 				panel.render(graphics);
 	}
 	
 	public void add(GUIPanel panel) {
 		panels.add(panel);
 	}
+	
+	public void enable(int i) {
+		panels.get(i).spawn();
+	}
+	
+	public void disable(int i) {
+		panels.get(i).despawn();
+	}
+	
+	public boolean isAlive(int i) {
+		return panels.get(i).alive;
+	}
+	
 }

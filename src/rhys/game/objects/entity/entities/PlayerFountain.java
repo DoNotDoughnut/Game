@@ -1,24 +1,30 @@
 package rhys.game.objects.entity.entities;
 
-import rhys.game.main.Game;
+import rhys.game.input.GameKeyListener;
+import rhys.game.input.GameMouseListener;
 import rhys.game.main.GameRenderer;
 import rhys.game.objects.entity.Player;
+import rhys.game.objects.gui.GUIManager;
 import rhys.game.objects.sprite.Sprite;
 import rhys.game.objects.tile.Tile;
 
 public class PlayerFountain extends Player {
 
+	public PlayerFountain(GameKeyListener keyInput, GameMouseListener mouseInput, GUIManager gui) {
+		super(keyInput, mouseInput, gui);
+	}
+
 	public void update() {
 		
 		int xO = 0, yO = 0;
 
-		if(Game.keyInput.up)
+		if(keyInput.up)
 			yO-=2;
-		if(Game.keyInput.down)
+		if(keyInput.down)
 			yO+=2;
-		if(Game.keyInput.left)
+		if(keyInput.left)
 			xO-=2;
-		if(Game.keyInput.right)
+		if(keyInput.right)
 			xO+=2;
 		
 		//Movement commands below
@@ -41,7 +47,7 @@ public class PlayerFountain extends Player {
 		
 		// Kick > Crouch/Sprint > Walk > Idle
 		
-		gg.renderPlayer(hitbox.x, hitbox.y, this, dir != 0);
+		gg.render(hitbox.x, hitbox.y, this.sprite, dir != 0);
 	}
 
 	

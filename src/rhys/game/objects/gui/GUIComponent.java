@@ -1,15 +1,18 @@
 package rhys.game.objects.gui;
 
 import rhys.game.main.GameRenderer;
+import rhys.game.objects.entity.Entity;
 import rhys.game.objects.sprite.Sprite;
 
-public class GUIComponent {
+public class GUIComponent extends Entity {
 	
 	public int x, y, width, height;
-	protected int xO, yO;
-	private Sprite sprite;
+	public final int startX, startY;
+	protected Sprite sprite;
 	
 	public GUIComponent(int x, int y) {
+		this.startX = x;
+		this.startY = y;
 		this.x=x;
 		this.y=y;
 	}
@@ -30,15 +33,7 @@ public class GUIComponent {
 	}
 	
 	public void render(GameRenderer graphics) {
-		graphics.render(x+xO, y+yO, sprite, false);
-	}
-	
-	public int getTrueX() {
-		return x+xO;
-	}
-	
-	public int getTrueY() {
-		return y+yO;
+		graphics.render(x+graphics.xOffset, y+graphics.yOffset, sprite, false);
 	}
 
 }
