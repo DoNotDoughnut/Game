@@ -5,7 +5,8 @@ import rhys.game.objects.sprite.Sprite;
 public class GameRenderer {
 
 	public int[] pixels;
-	public int width, height, xOffset, yOffset;
+	public int xOffset, yOffset;
+	public final int width, height, scale;
 	
 	public void render(int xp, int yp, Sprite sprite, boolean flip) {
 		for (int y = 0; y < sprite.height; y++) {
@@ -34,9 +35,10 @@ public class GameRenderer {
 			pixels[i] = 0;
 	}
 	
-	public GameRenderer(int width,int height) {
+	public GameRenderer(int width,int height, int scale) {
 		this.width=width;
 		this.height=height;
+		this.scale=scale;
 		pixels = new int[width*height];
 	}
 }

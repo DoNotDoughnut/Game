@@ -11,24 +11,18 @@ public class GUILabel extends GUIComponent {
 
 	public String text;
 	public GameText textbox;
-	
-	public GUILabel(int x, int y, Font font, Color color, String text, boolean precise) {
-		super(x,y);
-		this.text = text;
-		textbox = new GameText(x, y, font, color, text, precise);
-	}
+	private int scale;
 	
 	public GUILabel(int x, int y, Font font, Color color, String text) {
 		super(x,y);
 		this.text = text;
-		textbox = new GameText(x, y, font, color, text, false);
+		textbox = new GameText(x, y, font, color, text);
+		scale = textbox.getScale();
 	}
 	
 	public void update() {
 		if(textbox.text!=text)
 			textbox.text = text;
-		textbox.x = x;
-		textbox.y = y;
 	}
 	
 	public void render(GameRenderer graphics) {
@@ -36,8 +30,6 @@ public class GUILabel extends GUIComponent {
 	}
 	
 	public void spawn() {
-		x = startX;
-		y = startY;
 		alive = true;
 		textbox.spawn();
 	}
@@ -45,6 +37,20 @@ public class GUILabel extends GUIComponent {
 	public void despawn() {
 		alive = false;
 		textbox.despawn();
+	}
+	
+	public void move(int newX, int newY) {
+		x += newX*scale;
+		y += newY*scale;
+		textbox.x = x;
+		textbox.y = y;
+	}
+	
+	public void resetPos() {
+		x = startX*scale;
+		y = startY*scale;
+		textbox.x = startX;
+		textbox.y = startY;
 	}
 
 }

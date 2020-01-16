@@ -12,10 +12,9 @@ import rhys.game.objects.sprite.SpriteSheet;
 
 public class GUITitleBar extends GUIComponent {
 
-	protected GUILabel windowLabel;
-	protected GUIButton moveButton, closeButton;
+	private GUILabel windowLabel;
+	private GUIButton moveButton, closeButton;
 	private GUIPanel panel;
-	private GameRenderer graphics;
 	
 	protected static int barHeight = 8, buttonSize = 6;
 	
@@ -26,29 +25,30 @@ public class GUITitleBar extends GUIComponent {
 	public GUITitleBar(GUIPanel panel, GameMouseListener mouseInput, GameRenderer graphics, int color) {
 		super(new Sprite(color, panel.width, barHeight), 0, 0, panel.width, barHeight);
 		this.panel=panel;
-		this.graphics=graphics;
-		windowLabel = new GUILabel(x+2, y+13, GameText.guiFont, Color.black, panel.name, true);
+		windowLabel = new GUILabel(x+2, y+13, GameText.guiFont, Color.white, panel.name);
 		moveButton = new MoveButton(this, mouseInput, graphics, moveSprite, x, width, y);
-		closeButton = new CloseButton(panel, mouseInput, graphics, closeSprite, x, width, y);
+		closeButton = new CloseButton(this, mouseInput, graphics, closeSprite, x, width, y);
 	}
 	
-	protected void move(int newX, int newY) {
+	protected void closePanel() {
+		panel.despawn();
+	}
+	
+	protected void movePanelPos(int newX, int newY) {
+		panel.move(newX, newY);
 		
-		panel.x += newX;
-		panel.y += newY;
+		windowLabel.move(newX, newY);
+		moveButton.move(newX, newY);
+		closeButton.move(newX, newY);
 		
-		windowLabel.x += newX*graphics.scale;
-		windowLabel.y += newY*graphics.scale;
+	}
+	
+	protected void resetPanelPos() {
+		panel.resetPos();
 		
-		closeButton.x += newX;
-		closeButton.y += newY;
-		
-		for(GUIComponent component : panel.components) {
-			component.x += newX;
-			component.y += newY;
-		}
-		
-		panel.updateList(panel.components);
+		windowLabel.resetPos();
+		moveButton.resetPos();
+		closeButton.resetPos();
 	}
 	
 	
@@ -72,8 +72,6 @@ public class GUITitleBar extends GUIComponent {
 	
 	public void spawn() {
 		alive = true;
-		x = startX;
-		y = startY;
 		windowLabel.spawn();
 		moveButton.spawn();
 		closeButton.spawn();
@@ -85,28 +83,30 @@ public class GUITitleBar extends GUIComponent {
 		moveButton.despawn();
 		closeButton.despawn();
 	}
+
+	
 	
 }
 
 class CloseButton extends GUIButton {
 	
-	private GUIPanel panel;
+	private GUITitleBar titleBar;
 	
-	public CloseButton(GUIPanel panel, GameMouseListener mouseInput, GameRenderer graphics, Sprite sprite, int x, int width, int y) {
+	public CloseButton(GUITitleBar titleBar, GameMouseListener mouseInput, GameRenderer graphics, Sprite sprite, int x, int width, int y) {
 		super(mouseInput, graphics, sprite, (x+width)-1*(2+GUITitleBar.buttonSize), y+1, 6, 6);
-		this.panel = panel;
+		this.titleBar = titleBar;
 	}
 	
 	public void update() {
 		if(clicked()) {
-			panel.despawn();
+			titleBar.closePanel();
 		}
 	}
 }
 
 class MoveButton extends GUIButton {
 
-	private int origX = -1, origY = -1, newX, newY;
+	private int origX = -1, origY = -1;
 	private boolean inAction = false;
 	private GUITitleBar titleBar;
 
@@ -117,31 +117,36 @@ class MoveButton extends GUIButton {
 	}
 
 	public void update() {
-		if(inAction&&mouseInput.clicking) {
-
-			newX = mouseInput.getX() - origX;
-			newY = mouseInput.getY() - origY;
+		if(inAction&&clicked()) { //Double click button action
 			
-			titleBar.move(newX, newY);
+			titleBar.resetPanelPos();
 			
-			x += newX;
-			y += newY;
+			setCoords(0, 0, false);
 			
-			origX = newX;
-			origY = newY;
-			
-			inAction = false;
 		}
-		if(!inAction&&clicked()) {
-			//if(origX == -1) {
-				origX = mouseInput.getX();//titleBar.x;
-				origY = mouseInput.getY(); //titleBar.y;
-			//}
-			mouseInput.clicking = false;
+		
+		if(inAction&&mouseInput.clicking) {//Click somewhere other than button action
 			
-			inAction = true;
+			int newX = mouseInput.getX() - origX;
+			int newY = mouseInput.getY() - origY;
+			
+			titleBar.movePanelPos(newX, newY);
+			
+			setCoords(newX, newY, false);
+			
 		}
+		
+		if(!inAction&&clicked()) //First click of button
+			setCoords(mouseInput.getX(), mouseInput.getY(), true);
 	}
+	
+	private void setCoords(int newX, int newY, boolean inAction) {
+		origX=newX;
+		origY=newY;
+		this.inAction=inAction;
+		mouseInput.clicking = false;
+	}
+		
 	
 }
 

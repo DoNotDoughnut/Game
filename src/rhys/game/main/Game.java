@@ -30,7 +30,7 @@ public class Game extends Canvas implements Runnable {
 						version = "INDEV-2", 
 						author = "Rhys Holloway";
 	
-	public static final int width = 480, 
+	private static final int width = 480, 
 							height = width/16*9, 
 							scale = 2;
 	
@@ -100,10 +100,11 @@ public class Game extends Canvas implements Runnable {
 		
 		setPreferredSize(resolution);
 		
-		graphics = new GameRenderer(width, height); // Establishes game renderer
+		graphics = new GameRenderer(width, height, scale); // Establishes game renderer
 		
 		currentLevel = PlatformLevel.level; //Set the level
 		
+		GameText.init(graphics); //Initialize the text renderer so it is ready to render text
 		
 		//Create and add input listeners
 		
@@ -127,11 +128,11 @@ public class Game extends Canvas implements Runnable {
 		
 		panel.add(new GUITitleBar(panel, mouseInput, graphics, 0x3F3F3F));
 		
-		panel.add(playerXL = new GUILabel(5, 40, GameText.guiFont, Color.black, "Player X: ")); 
-		panel.add(playerYL = new GUILabel(5, 56, GameText.guiFont, Color.black, "Player Y: "));
+		panel.add(playerXL = new GUILabel(5*graphics.scale, 40*graphics.scale, GameText.guiFont, Color.black, "Player X: ")); 
+		panel.add(playerYL = new GUILabel(5*graphics.scale, 56*graphics.scale, GameText.guiFont, Color.black, "Player Y: "));
 		
-		panel.add(new GUILabel(5, 18, GameText.guiFont, Color.black, "Hello!! I am a")); 
-		panel.add(new GUILabel(5, 28, GameText.dialogueFont, Color.black, "test GUI label."));
+		panel.add(new GUILabel(5*graphics.scale, 18*graphics.scale, GameText.guiFont, Color.black, "Hello!! I am a")); 
+		panel.add(new GUILabel(5*graphics.scale, 28*graphics.scale, GameText.dialogueFont, Color.black, "test GUI label."));
 		
 		//Add the panel to the GUI manager
 		
@@ -210,9 +211,7 @@ public class Game extends Canvas implements Runnable {
 	}
 
 	public static void main(String[] args) {
-		
-		GameText.init(); //Initialize the text renderer so it is ready to render text
-		
+			
 		Game game = new Game(); //Create a new instance of the game
 				
 		game.start(); // call start();

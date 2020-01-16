@@ -19,30 +19,22 @@ public class GameText extends Entity {
 	public Color color;
 	public Font font;
 	public final int id;
-	public boolean precise;
-	private static GameRenderer gr;
 	
 	private static Font basicFont;
 	public static Font dialogueFont, guiFont;
 	private static ArrayList<GameText> texts = new ArrayList<>();
-	private static int ids = 0;
+	private static int ids = 0, scale;
 	
-	public GameText(int x, int y, Font font, Color color, String text, boolean precise) {
+	public GameText(int x, int y, Font font, Color color, String text) {
 		this.x=x;
 		this.y=y;
 		this.font=font;
 		this.color=color;
 		this.text=text;
-		this.precise=precise;
 		
 		this.id = ids;
 		texts.add(id, null);
 		ids++;
-	}
-	
-	public GameText(int x, int y, Font font, Color color, String text) {
-		this(x,y,font,color,text,false);
-		
 	}
 	
 	public void spawn() {
@@ -56,14 +48,14 @@ public class GameText extends Entity {
 	}
 
 	public static void init(GameRenderer gr) {
-		GameText.gr=gr;
+		scale = gr.scale;
 		
 		try {
 			basicFont = Font.createFont(Font.TRUETYPE_FONT, GameText.class.getClassLoader().getResourceAsStream("rhys/game/resources/fonts/monogram.ttf"));			
 		} catch (FontFormatException | IOException e) {e.printStackTrace();}
 		
-		guiFont = basicFont.deriveFont((float) (12*gr.scale));
-		dialogueFont = basicFont.deriveFont((float) (16*gr.scale));
+		guiFont = basicFont.deriveFont((float) (12*scale));
+		dialogueFont = basicFont.deriveFont((float) (16*scale));
 		
 	}
 
@@ -77,13 +69,13 @@ public class GameText extends Entity {
 				
 			g.setFont(text.font);
 			g.setColor(text.color);
-			if(text.precise)
-				g.drawString(text.text, text.x, text.y);
-			else
-				g.drawString(text.text, (text.x*gr.scale), (text.y*gr.scale));
+			g.drawString(text.text, text.x, text.y);
 			
 			}
+	}
 		
+	public int getScale() {
+		return scale;
 	}
 	
 }

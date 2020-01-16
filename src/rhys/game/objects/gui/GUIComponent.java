@@ -35,5 +35,23 @@ public class GUIComponent extends Entity {
 	public void render(GameRenderer graphics) {
 		graphics.render(x+graphics.xOffset, y+graphics.yOffset, sprite, false);
 	}
+	
+	public void spawn() {
+		alive = true;
+	}
+	
+	public void despawn() {
+		alive = false;
+	}
+	
+	public void move(int xOffset, int yOffset) {
+		x += xOffset;
+		y += yOffset;
+	}
+
+	public void resetPos() {
+		x = startX;
+		y = startY;
+	}
 
 }

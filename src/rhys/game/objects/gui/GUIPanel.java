@@ -38,8 +38,6 @@ public class GUIPanel extends Entity {
 	}
 	
 	public void spawn() {
-		x = startX;
-		y = startY;
 		alive = true;
 		for(GUIComponent component : components)
 			component.spawn();
@@ -57,6 +55,20 @@ public class GUIPanel extends Entity {
 
 	public void add(GUIComponent component) {
 		components.add(component);
+	}
+	
+	public void move(int xOffset, int yOffset) {
+		x += xOffset;
+		y += yOffset;
+		for(GUIComponent component : components)
+			component.move(xOffset, yOffset);
+	}
+	
+	public void resetPos() {
+		x = startX;
+		y = startY;
+		for(GUIComponent component : components)
+			component.resetPos();
 	}
 	
 }
