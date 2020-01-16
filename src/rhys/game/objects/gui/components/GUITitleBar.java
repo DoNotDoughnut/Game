@@ -3,7 +3,6 @@ package rhys.game.objects.gui.components;
 import java.awt.Color;
 
 import rhys.game.input.GameMouseListener;
-import rhys.game.main.Game;
 import rhys.game.main.GameRenderer;
 import rhys.game.objects.entity.entities.GameText;
 import rhys.game.objects.gui.GUIComponent;
@@ -16,6 +15,7 @@ public class GUITitleBar extends GUIComponent {
 	protected GUILabel windowLabel;
 	protected GUIButton moveButton, closeButton;
 	private GUIPanel panel;
+	private GameRenderer graphics;
 	
 	protected static int barHeight = 8, buttonSize = 6;
 	
@@ -26,6 +26,7 @@ public class GUITitleBar extends GUIComponent {
 	public GUITitleBar(GUIPanel panel, GameMouseListener mouseInput, GameRenderer graphics, int color) {
 		super(new Sprite(color, panel.width, barHeight), 0, 0, panel.width, barHeight);
 		this.panel=panel;
+		this.graphics=graphics;
 		windowLabel = new GUILabel(x+2, y+13, GameText.guiFont, Color.black, panel.name, true);
 		moveButton = new MoveButton(this, mouseInput, graphics, moveSprite, x, width, y);
 		closeButton = new CloseButton(panel, mouseInput, graphics, closeSprite, x, width, y);
@@ -36,8 +37,8 @@ public class GUITitleBar extends GUIComponent {
 		panel.x += newX;
 		panel.y += newY;
 		
-		windowLabel.x += newX*Game.scale;
-		windowLabel.y += newY*Game.scale;
+		windowLabel.x += newX*graphics.scale;
+		windowLabel.y += newY*graphics.scale;
 		
 		closeButton.x += newX;
 		closeButton.y += newY;

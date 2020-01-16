@@ -6,10 +6,10 @@ import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.RenderingHints;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import rhys.game.main.Game;
+
+import rhys.game.main.GameRenderer;
 import rhys.game.objects.entity.Entity;
 
 public class GameText extends Entity {
@@ -20,6 +20,7 @@ public class GameText extends Entity {
 	public Font font;
 	public final int id;
 	public boolean precise;
+	private static GameRenderer gr;
 	
 	private static Font basicFont;
 	public static Font dialogueFont, guiFont;
@@ -54,14 +55,15 @@ public class GameText extends Entity {
 		alive = false;
 	}
 
-	public static void init() {
+	public static void init(GameRenderer gr) {
+		GameText.gr=gr;
 		
 		try {
-			basicFont = Font.createFont(Font.TRUETYPE_FONT, new File(System.getProperty("user.dir")+"/src/rhys/game/resources/fonts/monogram.ttf"));			
+			basicFont = Font.createFont(Font.TRUETYPE_FONT, GameText.class.getClassLoader().getResourceAsStream("rhys/game/resources/fonts/monogram.ttf"));			
 		} catch (FontFormatException | IOException e) {e.printStackTrace();}
 		
-		guiFont = basicFont.deriveFont((float) (12*Game.scale));
-		dialogueFont = basicFont.deriveFont((float) (16*Game.scale));
+		guiFont = basicFont.deriveFont((float) (12*gr.scale));
+		dialogueFont = basicFont.deriveFont((float) (16*gr.scale));
 		
 	}
 
@@ -78,7 +80,7 @@ public class GameText extends Entity {
 			if(text.precise)
 				g.drawString(text.text, text.x, text.y);
 			else
-				g.drawString(text.text, (text.x*Game.scale), (text.y*Game.scale));
+				g.drawString(text.text, (text.x*gr.scale), (text.y*gr.scale));
 			
 			}
 		

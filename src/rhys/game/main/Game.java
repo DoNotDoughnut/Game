@@ -27,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String name = "Game", 
-						version = "1", 
+						version = "INDEV-2", 
 						author = "Rhys Holloway";
 	
 	public static final int width = 480, 
@@ -38,8 +38,6 @@ public class Game extends Canvas implements Runnable {
 	
 	private static GUILabel playerXL,
 							playerYL;
-	
-	
 	
 	private boolean running = false;
 	private Thread thread;

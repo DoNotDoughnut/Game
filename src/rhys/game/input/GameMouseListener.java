@@ -4,7 +4,6 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
 
-import rhys.game.main.Game;
 import rhys.game.main.GameRenderer;
 
 public class GameMouseListener implements MouseListener, MouseMotionListener {
@@ -19,11 +18,11 @@ public class GameMouseListener implements MouseListener, MouseMotionListener {
 	}
 	
 	public int getX() {
-		return mouseX/Game.scale;
+		return mouseX/graphics.scale;
 	}
 	
 	public int getY() {
-		return mouseY/Game.scale;
+		return mouseY/graphics.scale;
 	}
 	
 	public void mouseDragged(MouseEvent e) { //Pretty much "while(clicking)"
