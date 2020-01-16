@@ -8,8 +8,10 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
+import org.lwjgl.glfw.GLFWErrorCallback;
 import rhys.game.input.GameKeyListener;
 import rhys.game.input.GameMouseListener;
+import rhys.game.main.update.Timer;
 import rhys.game.objects.entity.entities.GameText;
 import rhys.game.objects.entity.entities.PlayerBlue;
 import rhys.game.objects.entity.entities.ScreenFocus;
@@ -42,8 +44,8 @@ public class Game extends Canvas implements Runnable {
 	private boolean running = false;
 	private Thread thread;
 	
-	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData();
+	private BufferedImage image = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB); //render image
+	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); //image data
 	
 	public JFrame frame;
 	public GameRenderer graphics;
@@ -75,14 +77,10 @@ public class Game extends Canvas implements Runnable {
 		
 		graphics.clear();
 		
-		focus.render(graphics);
-		currentLevel.render(focus.x, focus.y, graphics);
-		player.render(graphics);
-		guiManager.render(graphics);
+		renderObjects();
 		
 		
-		for(int i = 0; i < pixels.length; i++)
-			pixels[i] = graphics.pixels[i];
+		System.arraycopy(graphics.pixels, 0, pixels, 0, pixels.length);
 		
 		Graphics g = bs.getDrawGraphics();
 		
@@ -94,7 +92,20 @@ public class Game extends Canvas implements Runnable {
 		bs.show();
 	}
 	
+	private void renderObjects() {
+		focus.render(graphics);
+		currentLevel.render(focus.x, focus.y, graphics);
+		player.render(graphics);
+		guiManager.render(graphics);
+	}
+	
 	public Game() {
+		
+		//LWJGL stuff
+		
+		//errorCallback = GLFWErrorCallback.createPrint(System.err);
+	
+		
 		
 		//Sets window and canvas size to the resolution specified
 		
@@ -158,38 +169,25 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void run() {
+		Timer timer = new Timer();
 		requestFocus();
-		
-		long lastTime = System.nanoTime();
-		long timer = System.currentTimeMillis();
-		final double updateEvery = 1000000000.0 / 60.0; // 1 billion / 60 (more accurate than milliseconds)
-		double delta = 0;
-		int ups = 0, fps = 0;
+		int targetUPS = 60;
+		float delta;
+		float accumulator = 0f;
+		float interval = 1f / targetUPS;
 		
 		while (running) {
+			delta = timer.getDelta();
+			accumulator += delta; 
 			
-			long now = System.nanoTime();
-			
-			delta += (now - lastTime) / updateEvery; //Sets delta is checked to see if the time in between last 
-											//time this was called and now was more than 1/60th of a second
-			
-			lastTime = now;
-			
-			while(delta>=1) { //Runs 60 times per second so game update speed wont be off
+			while(accumulator >= interval) { //Runs 60 times per second so game update speed wont be off
 				update();
 				ups++;
-				delta--;
+				accumulator -= interval;
 			}
 			render(); //Renders as many times per second as possible
 			fps++;
 			
-			if (System.currentTimeMillis() - timer > 1000) {
-				timer += 1000;
-				this.ups=ups;
-				this.fps=fps;
-				ups = 0;
-				fps = 0;
-			}
 		}
 	}
 	

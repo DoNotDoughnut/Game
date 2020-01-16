@@ -1,5 +1,6 @@
 package rhys.game.main;
 
+import java.util.Arrays;
 import rhys.game.objects.sprite.Sprite;
 
 public class GameRenderer {
@@ -31,8 +32,7 @@ public class GameRenderer {
 	}
 	
 	public void clear() {
-		for (int i = 0; i < pixels.length; i++)
-			pixels[i] = 0;
+		Arrays.fill(pixels, 0);
 	}
 	
 	public GameRenderer(int width,int height, int scale) {
