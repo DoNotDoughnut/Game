@@ -8,10 +8,8 @@ import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
 import javax.swing.JFrame;
-import org.lwjgl.glfw.GLFWErrorCallback;
 import rhys.game.input.GameKeyListener;
 import rhys.game.input.GameMouseListener;
-import rhys.game.main.update.Timer;
 import rhys.game.objects.entity.entities.GameText;
 import rhys.game.objects.entity.entities.PlayerBlue;
 import rhys.game.objects.entity.entities.ScreenFocus;
@@ -29,7 +27,7 @@ public class Game extends Canvas implements Runnable {
 	private static final long serialVersionUID = 1L;
 
 	public static final String name = "Game", 
-						version = "INDEV-2", 
+						version = "INDEV-2-FINAL", 
 						author = "Rhys Holloway";
 	
 	private static final int width = 480, 
@@ -169,24 +167,35 @@ public class Game extends Canvas implements Runnable {
 	}
 	
 	public void run() {
-		Timer timer = new Timer();
-		requestFocus();
-		int targetUPS = 60;
-		float delta;
-		float accumulator = 0f;
-		float interval = 1f / targetUPS;
+		long lastTime = System.nanoTime();
+		long timer = System.currentTimeMillis();
+		final double updateEvery = 1000000000.0 / 60.0; // 1 billion / 60 (more accurate than milliseconds)
+		double delta = 0;
+		int ups = 0, fps = 0;
 		
 		while (running) {
-			delta = timer.getDelta();
-			accumulator += delta; 
-			
-			while(accumulator >= interval) { //Runs 60 times per second so game update speed wont be off
+			long now = System.nanoTime();
+
+			delta += (now - lastTime) / updateEvery; //Sets delta is checked to see if the time in between last 
+											//time this was called and now was more than 1/60th of a second
+
+			lastTime = now;
+
+			while(delta>=1) { //Runs 60 times per second so game update speed wont be off
 				update();
 				ups++;
-				accumulator -= interval;
+				delta--;
 			}
 			render(); //Renders as many times per second as possible
 			fps++;
+			
+			if (System.currentTimeMillis() - timer > 1000) {
+				timer += 1000;
+				this.ups=ups;
+				this.fps=fps;
+				ups = 0;
+				fps = 0;
+			}
 			
 		}
 	}
