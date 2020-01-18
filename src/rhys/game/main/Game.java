@@ -36,8 +36,7 @@ public class Game extends Canvas implements Runnable {
 	
 	public static final Dimension resolution = new Dimension(width*scale, height*scale);
 	
-	private static GUILabel playerXL,
-							playerYL;
+	private static GUILabel playerXL, playerYL;
 	
 	private boolean running = false;
 	private Thread thread;
