@@ -8,7 +8,7 @@ import net.rhys.gameengine.texture.ETexture;
 
 public class GUIPanel extends Entity {
 	
-	public ArrayList<GUIComponent> components;
+	private ArrayList<GUIComponent> components;
 	public int x, y, width, height;
 	public final int startX, startY;
 	public String name;
@@ -49,10 +49,6 @@ public class GUIPanel extends Entity {
 			component.despawn();
 	}
 	
-	public void updateList(ArrayList<GUIComponent> list) {
-		components=list;
-	}
-
 	public void add(GUIComponent component) {
 		components.add(component);
 	}

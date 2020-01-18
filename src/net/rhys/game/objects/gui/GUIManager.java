@@ -6,7 +6,7 @@ import net.rhys.gameengine.render.ERenderer;
 
 public class GUIManager {
 	
-	public ArrayList<GUIPanel> panels;
+	private ArrayList<GUIPanel> panels;
 	
 	public GUIManager() {
 		panels = new ArrayList<>();

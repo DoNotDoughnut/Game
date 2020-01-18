@@ -1,6 +1,5 @@
 package net.rhys.game.objects.entity;
 
-import net.rhys.game.objects.tile.Tile;
 import net.rhys.gameengine.render.ERenderer;
 
 public class Hitbox {
@@ -36,23 +35,23 @@ public class Hitbox {
 	}
 	
 	public boolean bottomCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x 		  ) / Tile.size, (y + yO + height) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width) / Tile.size, (y + yO + height) / Tile.size).isSolid());
+		return(owner.level.getTileFromCoordinates((x 		  ) >> 4, (y + yO + height) >> 4).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + width)  >> 4, (y + yO + height) >> 4).isSolid());
 	}
 	
 	public boolean rightCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x + width + xO) / Tile.size, (y 	    	 ) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width + xO) / Tile.size, (y + height) / Tile.size).isSolid() );
+		return(owner.level.getTileFromCoordinates((x + width + xO) >> 4, (y 	    	 ) >> 4).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + width + xO) >> 4, (y + height) >> 4).isSolid() );
 	}
 	
 	public boolean topCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x	      ) / Tile.size, (y + yO) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + width) / Tile.size, (y + yO) / Tile.size).isSolid() );
+		return(owner.level.getTileFromCoordinates((x	      ) >> 4, (y + yO) >> 4).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + width) >> 4, (y + yO) >> 4).isSolid() );
 	}
 	
 	public boolean leftCollision(int xO, int yO) {
-		return(owner.level.getTileFromCoordinates((x + xO) / Tile.size, (y		     ) / Tile.size).isSolid() || 
-			   owner.level.getTileFromCoordinates((x + xO) / Tile.size, (y + height) / Tile.size).isSolid() );
+		return(owner.level.getTileFromCoordinates((x + xO) >> 4, (y		     ) >> 4).isSolid() || 
+			   owner.level.getTileFromCoordinates((x + xO) >> 4, (y + height) >> 4).isSolid() );
 	}
 	
 	public boolean collisionAny(int xO, int yO) {

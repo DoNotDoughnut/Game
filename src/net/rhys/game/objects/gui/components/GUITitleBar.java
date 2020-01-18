@@ -2,9 +2,9 @@ package net.rhys.game.objects.gui.components;
 
 import java.awt.Font;
 
-import net.rhys.game.Game;
 import net.rhys.game.objects.gui.GUIComponent;
 import net.rhys.game.objects.gui.GUIPanel;
+import net.rhys.gameengine.EEngine;
 import net.rhys.gameengine.input.EMouseInput;
 import net.rhys.gameengine.render.ERenderer;
 import net.rhys.gameengine.texture.ETexture;
@@ -16,16 +16,16 @@ public class GUITitleBar extends GUIComponent {
 	private GUIButton moveButton, closeButton;
 	private GUIPanel panel;
 	
-	protected static int barHeight = 8, buttonSize = 6;
+	protected static int barHeight = 9, buttonSize = 6;
 	
-	private ETextureSheet buttons = new ETextureSheet(Game.sheets+"buttons.png", 2, 1, 6);
+	private ETextureSheet buttons = new ETextureSheet(EEngine.resources+"spritesheets/buttons.png", 2, 1, 6);
 	private ETexture closeTexture = new ETexture(buttons, 1, 0, 6, 1);
 	private ETexture moveTexture = new ETexture(buttons, 0, 0, 6, 1);
 	
 	public GUITitleBar(GUIPanel panel, Font font, int color, EMouseInput mouseInput, ERenderer graphics) {
 		super(new ETexture(color, panel.width, barHeight), 0, 0, panel.width, barHeight);
 		this.panel=panel;
-		windowLabel = new GUILabel(x+2, y+13, font, 0xFFFFFF, panel.name, graphics);
+		windowLabel = new GUILabel(x+2, y+7, graphics.scale, font, 0xFFFFFF, panel.name);
 		moveButton = new MoveButton(this, mouseInput, graphics, moveTexture, x, width, y);
 		closeButton = new CloseButton(this, mouseInput, graphics, closeTexture, x, width, y);
 	}
@@ -59,15 +59,7 @@ public class GUITitleBar extends GUIComponent {
 	}
 
 	public void render(ERenderer graphics) {
-		
-		//Render background
-		
 		super.render(graphics);
-		
-		//Text is rendered separately
-		
-		//Render buttons
-		
 		moveButton.render(graphics);
 		closeButton.render(graphics);
 	}
@@ -85,8 +77,6 @@ public class GUITitleBar extends GUIComponent {
 		moveButton.despawn();
 		closeButton.despawn();
 	}
-
-	
 	
 }
 

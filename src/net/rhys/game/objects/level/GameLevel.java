@@ -2,10 +2,12 @@ package net.rhys.game.objects.level;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
+
 import javax.imageio.ImageIO;
 
 import net.rhys.game.objects.tile.Tile;
 import net.rhys.game.objects.tile.TileCoordinate;
+import net.rhys.gameengine.EEngine;
 import net.rhys.gameengine.render.ERenderer;
 
 
@@ -16,23 +18,23 @@ public class GameLevel {
 	protected String path;
 	public final TileCoordinate spawnPoint;
 
-	public GameLevel(TileCoordinate spawnPoint) {
+	public GameLevel(TileCoordinate spawnPoint, EEngine engine) {
 		this.spawnPoint = spawnPoint;
 		loadLevel();
-		generateLevel();
+		generateLevel(engine);
 	}
 	
-	public GameLevel(String path, TileCoordinate spawnPoint) {
+	public GameLevel(String path, TileCoordinate spawnPoint, EEngine engine) {
 		this.path=path;
 		this.spawnPoint = spawnPoint;
 		loadLevel();
-		generateLevel();
+		generateLevel(engine);
 		
 	}
 	
 	protected void loadLevel() {
 		try {
-			BufferedImage image = ImageIO.read(GameLevel.class.getResource(path));
+			BufferedImage image = ImageIO.read(GameLevel.class.getResource(EEngine.resources+"levels/"+path));
 			width = image.getWidth();
 			height = image.getHeight();
 			tiles = new int[width*height];
@@ -43,15 +45,15 @@ public class GameLevel {
 		}
 	}
 
-	protected void generateLevel() {
+	protected void generateLevel(EEngine engine) {
 
 	}
 	
 	public void update() {
-		
+
 	}
 	
-	public void render(int xScroll, int yScroll, ERenderer graphics) {
+	public void renderTiles(int xScroll, int yScroll, ERenderer graphics) {
 		graphics.xOffset = xScroll;
 		graphics.yOffset = yScroll;
 		int x0 = xScroll >> 4,
@@ -70,6 +72,13 @@ public class GameLevel {
 	
 	public Tile getTileFromColor(int color) {
 		return Tile.voidTile;
-	}	
+	}
 
+	public void init(EEngine engine) {
+		
+	}
+
+	public void render(ERenderer graphics) {
+		
+	}
 }

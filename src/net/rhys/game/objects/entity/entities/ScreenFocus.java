@@ -21,8 +21,8 @@ public class ScreenFocus extends Entity {
 	
 	public void render(ERenderer graphics) {
 		if(alive) {
-			x = focus.hitbox.x + (focus.hitbox.width /2) - (graphics.width /2);
-			y = focus.hitbox.y + (focus.hitbox.height/2) - (graphics.height/2);
+			x = focus.hitbox.x + (focus.hitbox.width  / 2) - (graphics.width  / 2);
+			y = focus.hitbox.y + (focus.hitbox.height / 2) - (graphics.height / 2);
 		}
 	}	
 	

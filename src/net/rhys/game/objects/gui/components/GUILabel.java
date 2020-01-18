@@ -8,15 +8,15 @@ import net.rhys.gameengine.render.EText;
 
 public class GUILabel extends GUIComponent {
 
+	private int scale;
 	public String text;
 	public EText textbox;
-	private ERenderer graphics;
 	
-	public GUILabel(int x, int y, Font font, int color, String text, ERenderer graphics) {
-		super(x,y);
+	public GUILabel(int x, int y, int scale, Font font, int color, String text) {
+		super(x*scale, y*scale);
+		this.scale = scale;
 		this.text = text;
-		this.graphics = graphics;
-		textbox = new EText(x, y, font, color, text);
+		textbox = new EText(x*scale, y*scale, font, color, text);
 	}
 	
 	public void update() {
@@ -39,15 +39,15 @@ public class GUILabel extends GUIComponent {
 	}
 	
 	public void move(int newX, int newY) {
-		x += newX*graphics.scale;
-		y += newY*graphics.scale;
+		x += newX*scale;
+		y += newY*scale;
 		textbox.x = x;
 		textbox.y = y;
 	}
 	
 	public void resetPos() {
-		x = startX*graphics.scale;
-		y = startY*graphics.scale;
+		x = startX;
+		y = startY;
 		textbox.x = startX;
 		textbox.y = startY;
 	}
