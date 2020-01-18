@@ -48,8 +48,6 @@ public class GUIButton extends GUIComponent {
 	}
 	
 	public void spawn() {
-		x = startX;
-		y = startY;
 		alive = true;
 	}
 
