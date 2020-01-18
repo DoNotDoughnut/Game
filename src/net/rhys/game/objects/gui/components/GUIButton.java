@@ -46,9 +46,4 @@ public class GUIButton extends GUIComponent {
 			holdingClick = false;
 		return false;
 	}
-	
-	public void spawn() {
-		alive = true;
-	}
-
 }
