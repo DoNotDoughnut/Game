@@ -1,0 +1,7 @@
+moves
+
+idle: idle 1, idle 2, idle 3
+move: move 1, move 2, move 3, move 4, move 5, move 6
+kick: kick 1, kick 2
+hurt: hurt 1, hurt 2, hurt 3
+crouch/sprint: sprint 1 - 7

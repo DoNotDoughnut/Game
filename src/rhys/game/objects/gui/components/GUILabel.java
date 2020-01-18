@@ -3,7 +3,7 @@ package rhys.game.objects.gui.components;
 import java.awt.Color;
 import java.awt.Font;
 
-import rhys.game.main.GameRenderer;
+import rhys.game.main.graphics.Renderer;
 import rhys.game.objects.entity.entities.GameText;
 import rhys.game.objects.gui.GUIComponent;
 
@@ -25,7 +25,7 @@ public class GUILabel extends GUIComponent {
 			textbox.text = text;
 	}
 	
-	public void render(GameRenderer graphics) {
+	public void render(Renderer graphics) {
 		//Leave here to override
 	}
 	

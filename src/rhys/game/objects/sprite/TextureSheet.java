@@ -1,17 +1,22 @@
 package rhys.game.objects.sprite;
 
 import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
+import org.newdawn.slick.opengl.Texture;
+import org.newdawn.slick.opengl.TextureLoader;
 
-public class SpriteSheet {
-	
+public class TextureSheet {
+
 	public final int spriteWidth, spriteHeight;
 	public int width, height;
 	public BufferedImage image;
+	private String path;
 	
-	public SpriteSheet(String path, int spriteWidth, int spriteHeight) {
+	public TextureSheet(String path, int spriteWidth, int spriteHeight) {
+		this.path=path;
 		this.spriteWidth = spriteWidth;
 		this.spriteHeight = spriteHeight;
 		try {
@@ -21,10 +26,5 @@ public class SpriteSheet {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-	}
-	
-	
-	public SpriteSheet(String path, int spriteSize) {
-		this(path, spriteSize, spriteSize);
 	}
 }

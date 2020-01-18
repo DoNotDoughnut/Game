@@ -1,18 +1,17 @@
 package rhys.game.objects.gui.components;
 
-import rhys.game.input.GameMouseListener;
-import rhys.game.main.GameRenderer;
+import rhys.game.graphics.Renderer;
 import rhys.game.objects.gui.GUIComponent;
-import rhys.game.objects.sprite.Sprite;
+import rhys.game.objects.sprite.Sprite_old;
 
 public class GUIButton extends GUIComponent {
 
 	protected GameMouseListener mouseInput;
-	protected GameRenderer graphics;
+	protected Renderer graphics;
 	private boolean holdingClick = false;//, found = false;
 	protected int origX = -1, origY = -1;
 	
-	public GUIButton(GameMouseListener mouseInput, GameRenderer graphics, Sprite sprite, int x, int y, int width, int height) {
+	public GUIButton(GameMouseListener mouseInput, Renderer graphics, Sprite_old sprite, int x, int y, int width, int height) {
 		super(sprite, x, y, width, height);
 		this.graphics=graphics;
 		this.mouseInput=mouseInput;

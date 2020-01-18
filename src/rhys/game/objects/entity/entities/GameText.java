@@ -9,12 +9,12 @@ import java.awt.RenderingHints;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import rhys.game.main.GameRenderer;
+import rhys.game.graphics.Renderer;
 import rhys.game.objects.entity.Entity;
 
 public class GameText extends Entity {
 
-	public int x, y;
+	/*public int x, y;
 	public String text;
 	public Color color;
 	public Font font;
@@ -47,7 +47,7 @@ public class GameText extends Entity {
 		alive = false;
 	}
 
-	public static void init(GameRenderer gr) {
+	public static void init(Renderer gr) {
 		scale = gr.scale;
 		
 		try {
@@ -77,5 +77,5 @@ public class GameText extends Entity {
 	public int getScale() {
 		return scale;
 	}
-	
+	*/
 }

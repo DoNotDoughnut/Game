@@ -108,7 +108,7 @@ public class PlatformLevel extends GameLevel {
 class Level1Sprite extends Sprite {
 	
 	//private static SpriteSheet platformSprites = new SpriteSheet("/rhys/game/resources/spritesheets/platform_grass_spritesheet.png", 25, Sprite.defaultSize);
-	private static SpriteSheet level1Sprites = new SpriteSheet("/rhys/game/resources/spritesheets/level1Sheet.png", 10, 3, Sprite.defaultSize);
+	private static SpriteSheet level1Sprites = new SpriteSheet("/rhys/game/resources/spritesheets/level1Sheet.png", Sprite.defaultSize);
 	
 	public Level1Sprite(int x, int y, int variants) {
 		super(level1Sprites, x, y, variants);

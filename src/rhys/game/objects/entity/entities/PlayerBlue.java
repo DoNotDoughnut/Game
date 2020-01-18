@@ -1,14 +1,15 @@
 package rhys.game.objects.entity.entities;
 
-import rhys.game.input.GameKeyListener;
-import rhys.game.input.GameMouseListener;
-import rhys.game.main.GameRenderer;
+
+import rhys.game.graphics.Renderer;
+import rhys.game.input.KeyInput;
+import rhys.game.input.MouseMotionInput;
 import rhys.game.objects.entity.Hitbox;
 import rhys.game.objects.entity.Player;
 import rhys.game.objects.gui.GUIManager;
 import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.sprite.Sprite;
 import rhys.game.objects.sprite.SpriteSheet;
+import rhys.game.objects.sprite.Sprite;
 
 
 public class PlayerBlue extends Player {
@@ -26,7 +27,7 @@ public class PlayerBlue extends Player {
 						 playerBlue_run = new PlayerBlueSprite(4, 7, 2);
 				  
 	
-	public PlayerBlue(GameLevel level, GameKeyListener keyInput, GameMouseListener mouseInput, GUIManager gui,  int x, int y, int pW, int pH, int pWO, int pHO) {
+	public PlayerBlue(GameLevel level, KeyInput keyInput, MouseMotionInput mouseInput, GUIManager gui,  int x, int y, int pW, int pH, int pWO, int pHO) {
 		super(keyInput, mouseInput, gui);
 		this.level=level;
 		sprite = playerBlue_idle;
@@ -57,10 +58,7 @@ public class PlayerBlue extends Player {
 		if(keyInput.up) { // Jump
 			if(onGround&&!(jumping||falling)) { // Start jump
 				jumping = true;
-				if(running)
-					vDelta = -3.25f;
-				else
-					vDelta = -4.5f;
+				vDelta = running ? -3.25f : -4.5f;
 			}
 		}
 		
@@ -111,7 +109,7 @@ public class PlayerBlue extends Player {
 		
 	}
 	
-	public void render(GameRenderer gg) {
+	public void render(Renderer graphics) {
 		if(alive) {
 			
 			// Kick > Crouch/Sprint > Walk > Idle
@@ -125,7 +123,7 @@ public class PlayerBlue extends Player {
 			else 
 				sprite = playerBlue_idle;
 		
-			gg.render(hitbox.getSpriteX(), hitbox.getSpriteY(), this.sprite, dir != 0);
+			graphics.render(sprite, hitbox.getSpriteX(), hitbox.getSpriteY());//, this.sprite, dir != 0);
 			//hitbox.renderHitbox(gg);
 		}
 	}
@@ -133,10 +131,10 @@ public class PlayerBlue extends Player {
 
 class PlayerBlueSprite extends Sprite {
 
-	public static SpriteSheet playerBlue = new SpriteSheet("/rhys/game/resources/spritesheets/players/playerBlue.png", 7, 5, 32);
+	public static SpriteSheet playerBlue = new SpriteSheet("/rhys/game/resources/spritesheets/players/playerBlue.png", 32);
 	
 	public PlayerBlueSprite(int y, int variants, int idleTime) {
-		super(playerBlue, 0, y, 32, 32, variants, true, true, idleTime);
+		super(playerBlue, 0, y, 32, 32);
 	}
 
 }

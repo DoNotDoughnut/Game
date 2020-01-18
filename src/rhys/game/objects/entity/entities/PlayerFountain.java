@@ -1,8 +1,8 @@
 package rhys.game.objects.entity.entities;
 
-import rhys.game.input.GameKeyListener;
-import rhys.game.input.GameMouseListener;
-import rhys.game.main.GameRenderer;
+import rhys.game.graphics.Renderer;
+import rhys.game.input.KeyInput;
+import rhys.game.input.MouseMotionInput;
 import rhys.game.objects.entity.Player;
 import rhys.game.objects.gui.GUIManager;
 import rhys.game.objects.sprite.Sprite;
@@ -10,8 +10,8 @@ import rhys.game.objects.tile.Tile;
 
 public class PlayerFountain extends Player {
 
-	public PlayerFountain(GameKeyListener keyInput, GameMouseListener mouseInput, GUIManager gui) {
-		super(keyInput, mouseInput, gui);
+	public PlayerFountain(KeyInput keyInput, MouseMotionInput mouseMotionInput, GUIManager gui) {
+		super(keyInput, mouseMotionInput, gui);
 	}
 
 	public void update() {
@@ -43,11 +43,11 @@ public class PlayerFountain extends Player {
 		return false;
 	}
 	
-	public void render(GameRenderer gg) {
+	public void render(Renderer graphics) {
 		
 		// Kick > Crouch/Sprint > Walk > Idle
 		
-		gg.render(hitbox.x, hitbox.y, this.sprite, dir != 0);
+		//graphics.render(hitbox.x, hitbox.y, this.sprite, dir != 0);
 	}
 
 	
