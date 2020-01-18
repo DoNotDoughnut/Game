@@ -1,23 +1,23 @@
-package rhys.game.objects.level.levels;
+package net.rhys.game.objects.level.levels;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
 
 import javax.imageio.ImageIO;
 
-import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.sprite.Sprite;
-import rhys.game.objects.sprite.SpriteSheet;
-import rhys.game.objects.tile.Tile;
-import rhys.game.objects.tile.TileCoordinate;
-import rhys.game.objects.tile.tiles.BasicSolidTile;
+import net.rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.tile.Tile;
+import net.rhys.game.objects.tile.TileCoordinate;
+import net.rhys.game.objects.tile.tiles.BasicSolidTile;
+import net.rhys.gameengine.texture.ETexture;
+import net.rhys.gameengine.texture.ETextureSheet;
 
 public class PlatformLevel extends GameLevel {
 	
 	public static GameLevel level = new PlatformLevel();
 	
 	public PlatformLevel() {
-		super("/rhys/game/resources/levels/platformLevel.png", new TileCoordinate(3,12));
+		super("/net/rhys/game/resources/levels/platformLevel.png", new TileCoordinate(3,12));
 	}
 
 	protected void loadLevel(String path) {
@@ -61,57 +61,56 @@ public class PlatformLevel extends GameLevel {
 		return Tile.voidTile;
 	}
 	
-	public static Sprite skySprite = new Sprite(0xB8D9E2);
-	public static Sprite grassTopSprites = new Level1Sprite(0, 0, 3);
-	public static Sprite grassMidSprites = new Level1Sprite(0,1,3);
-	public static Sprite grassBotSprites = new Level1Sprite(0,2,3);
-	public static Sprite grass1xVSprites = new Level1Sprite(3,0,3);
-	public static Sprite grass1xHSprites = new Level1Sprite(3,1,3);
-	public static Sprite grassInterTopSprite = new Level1Sprite(3,2,3);
-	public static Sprite grassInterBotSprite = new Level1Sprite(6,0,3);
-	public static Sprite grass1x1Sprite = new Level1Sprite(9,0,1);
+	public static ETexture skyTexture = new ETexture(0xB8D9E2);
+	public static ETexture grassTopTextures = new Level1Texture(0, 0, 3);
+	public static ETexture grassMidTextures = new Level1Texture(0,1,3);
+	public static ETexture grassBotTextures = new Level1Texture(0,2,3);
+	public static ETexture grass1xVTextures = new Level1Texture(3,0,3);
+	public static ETexture grass1xHTextures = new Level1Texture(3,1,3);
+	public static ETexture grassInterTopTexture = new Level1Texture(3,2,3);
+	public static ETexture grassInterBotTexture = new Level1Texture(6,0,3);
+	public static ETexture grass1x1Texture = new Level1Texture(9,0,1);
 	
-	public static Tile skyTile = new Tile(skySprite);
+	public static Tile skyTile = new Tile(skyTexture);
 	
-	public static Tile grassTopLeftTile = new BasicSolidTile(grassTopSprites);
-	public static Tile grassTopMidTile = new BasicSolidTile(grassTopSprites.getVariant(2));
-	public static Tile grassTopRightTile = new BasicSolidTile(grassTopSprites.getVariant(3));
+	public static Tile grassTopLeftTile = new BasicSolidTile(grassTopTextures);
+	public static Tile grassTopMidTile = new BasicSolidTile(grassTopTextures.getVariant(2));
+	public static Tile grassTopRightTile = new BasicSolidTile(grassTopTextures.getVariant(3));
 	
-	public static Tile grassMidLeftTile = new BasicSolidTile(grassMidSprites);
-	public static Tile grassMiddleTile = new BasicSolidTile(grassMidSprites.getVariant(2));
-	public static Tile grassMidRightTile = new BasicSolidTile(grassMidSprites.getVariant(3));
+	public static Tile grassMidLeftTile = new BasicSolidTile(grassMidTextures);
+	public static Tile grassMiddleTile = new BasicSolidTile(grassMidTextures.getVariant(2));
+	public static Tile grassMidRightTile = new BasicSolidTile(grassMidTextures.getVariant(3));
 	
-	public static Tile grassBotLeftTile = new BasicSolidTile(grassBotSprites);
-	public static Tile grassBotMidTile = new BasicSolidTile(grassBotSprites.getVariant(2));
-	public static Tile grassBotRightTile = new BasicSolidTile(grassBotSprites.getVariant(3));
+	public static Tile grassBotLeftTile = new BasicSolidTile(grassBotTextures);
+	public static Tile grassBotMidTile = new BasicSolidTile(grassBotTextures.getVariant(2));
+	public static Tile grassBotRightTile = new BasicSolidTile(grassBotTextures.getVariant(3));
 	
-	public static Tile grassTop1xVTile = new BasicSolidTile(grass1xVSprites);
-	public static Tile grassMid1xVTile = new BasicSolidTile(grass1xVSprites.getVariant(2));
-	public static Tile grassBot1xVTile = new BasicSolidTile(grass1xVSprites.getVariant(3));
+	public static Tile grassTop1xVTile = new BasicSolidTile(grass1xVTextures);
+	public static Tile grassMid1xVTile = new BasicSolidTile(grass1xVTextures.getVariant(2));
+	public static Tile grassBot1xVTile = new BasicSolidTile(grass1xVTextures.getVariant(3));
 	
-	public static Tile grassLeft1xHTile = new BasicSolidTile(grass1xHSprites);
-	public static Tile grassMid1xHTile = new BasicSolidTile(grass1xHSprites.getVariant(2));
-	public static Tile grassRight1xHTile = new BasicSolidTile(grass1xHSprites.getVariant(3));
+	public static Tile grassLeft1xHTile = new BasicSolidTile(grass1xHTextures);
+	public static Tile grassMid1xHTile = new BasicSolidTile(grass1xHTextures.getVariant(2));
+	public static Tile grassRight1xHTile = new BasicSolidTile(grass1xHTextures.getVariant(3));
 	
-	public static Tile grassInterTopLeftTile = new BasicSolidTile(grassInterTopSprite);
-	public static Tile grassInterTopMidTile = new BasicSolidTile(grassInterTopSprite.getVariant(2));
-	public static Tile grassInterTopRightTile = new BasicSolidTile(grassInterTopSprite.getVariant(3));
+	public static Tile grassInterTopLeftTile = new BasicSolidTile(grassInterTopTexture);
+	public static Tile grassInterTopMidTile = new BasicSolidTile(grassInterTopTexture.getVariant(2));
+	public static Tile grassInterTopRightTile = new BasicSolidTile(grassInterTopTexture.getVariant(3));
 	
-	public static Tile grassInterBotLeftTile = new BasicSolidTile(grassInterBotSprite);
-	public static Tile grassInterBotMidTile = new BasicSolidTile(grassInterBotSprite.getVariant(2));
-	public static Tile grassInterBotRightTile = new BasicSolidTile(grassInterBotSprite.getVariant(3));
+	public static Tile grassInterBotLeftTile = new BasicSolidTile(grassInterBotTexture);
+	public static Tile grassInterBotMidTile = new BasicSolidTile(grassInterBotTexture.getVariant(2));
+	public static Tile grassInterBotRightTile = new BasicSolidTile(grassInterBotTexture.getVariant(3));
 	
-	public static Tile grass1x1Tile = new BasicSolidTile(grass1x1Sprite);
+	public static Tile grass1x1Tile = new BasicSolidTile(grass1x1Texture);
 	
 }
 
-class Level1Sprite extends Sprite {
+class Level1Texture extends ETexture {
 	
-	//private static SpriteSheet platformSprites = new SpriteSheet("/rhys/game/resources/spritesheets/platform_grass_spritesheet.png", 25, Sprite.defaultSize);
-	private static SpriteSheet level1Sprites = new SpriteSheet("/rhys/game/resources/spritesheets/level1Sheet.png", 10, 3, Sprite.defaultSize);
+	private static ETextureSheet level1Textures = new ETextureSheet("/net/rhys/game/resources/spritesheets/level1Sheet.png", 10, 3, ETexture.defaultSize);
 	
-	public Level1Sprite(int x, int y, int variants) {
-		super(level1Sprites, x, y, variants);
+	public Level1Texture(int x, int y, int variants) {
+		super(level1Textures, x, y, variants);
 	}
 
 }

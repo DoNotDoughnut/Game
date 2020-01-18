@@ -1,19 +1,19 @@
-package rhys.game.objects.gui.components;
+package net.rhys.game.objects.gui.components;
 
-import rhys.game.input.GameMouseListener;
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.gui.GUIComponent;
-import rhys.game.objects.sprite.Sprite;
+import net.rhys.game.objects.gui.GUIComponent;
+import net.rhys.gameengine.input.EMouseInput;
+import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.texture.ETexture;
 
 public class GUIButton extends GUIComponent {
 
-	protected GameMouseListener mouseInput;
-	protected GameRenderer graphics;
+	protected EMouseInput mouseInput;
+	protected ERenderer graphics;
 	private boolean holdingClick = false;//, found = false;
 	protected int origX = -1, origY = -1;
 	
-	public GUIButton(GameMouseListener mouseInput, GameRenderer graphics, Sprite sprite, int x, int y, int width, int height) {
-		super(sprite, x, y, width, height);
+	public GUIButton(EMouseInput mouseInput, ERenderer graphics, ETexture texture, int x, int y, int width, int height) {
+		super(texture, x, y, width, height);
 		this.graphics=graphics;
 		this.mouseInput=mouseInput;
 	}

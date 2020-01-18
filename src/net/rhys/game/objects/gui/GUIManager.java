@@ -1,8 +1,8 @@
-package rhys.game.objects.gui;
+package net.rhys.game.objects.gui;
 
 import java.util.ArrayList;
 
-import rhys.game.main.GameRenderer;
+import net.rhys.gameengine.render.ERenderer;
 
 public class GUIManager {
 	
@@ -18,7 +18,7 @@ public class GUIManager {
 				panel.update();
 	}
 	
-	public void render(GameRenderer graphics) {
+	public void render(ERenderer graphics) {
 		for(GUIPanel panel : panels)
 			if(panel.alive)
 				panel.render(graphics);

@@ -1,9 +1,9 @@
-package rhys.game.objects.level.levels;
+package net.rhys.game.objects.level.levels;
 
 import java.util.Arrays;
 
-import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.tile.TileCoordinate;
+import net.rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.tile.TileCoordinate;
 
 public class MainMenuLevel extends GameLevel {
 

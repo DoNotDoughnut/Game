@@ -1,10 +1,10 @@
-package rhys.game.objects.gui;
+package net.rhys.game.objects.gui;
 
 import java.util.ArrayList;
 
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.entity.Entity;
-import rhys.game.objects.sprite.Sprite;
+import net.rhys.game.objects.entity.Entity;
+import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.texture.ETexture;
 
 public class GUIPanel extends Entity {
 	
@@ -12,9 +12,9 @@ public class GUIPanel extends Entity {
 	public int x, y, width, height;
 	public final int startX, startY;
 	public String name;
-	private Sprite sprite;
+	private ETexture texture;
 	
-	public GUIPanel(int x, int y, int width, int height, Sprite sprite, String name) {
+	public GUIPanel(int x, int y, int width, int height, ETexture texture, String name) {
 		components = new ArrayList<>();
 		this.startX = x;
 		this.startY = y;
@@ -22,7 +22,7 @@ public class GUIPanel extends Entity {
 		this.y = y;
 		this.width=width;
 		this.height=height;
-		this.sprite = sprite;
+		this.texture = texture;
 		this.name = name;
 	}
 	
@@ -31,8 +31,8 @@ public class GUIPanel extends Entity {
 			component.update();
 	}
 	
-	public void render(GameRenderer graphics) {
-		graphics.render(x+graphics.xOffset, y+graphics.yOffset, sprite, false);
+	public void render(ERenderer graphics) {
+		graphics.render(x+graphics.xOffset, y+graphics.yOffset, texture, false);
 		for(GUIComponent components : components)
 			components.render(graphics);
 	}

@@ -1,14 +1,13 @@
-package rhys.game.objects.level;
+package net.rhys.game.objects.level;
 
 import java.awt.image.BufferedImage;
 import java.io.IOException;
-
 import javax.imageio.ImageIO;
 
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.level.levels.LevelT1;
-import rhys.game.objects.tile.Tile;
-import rhys.game.objects.tile.TileCoordinate;
+import net.rhys.game.objects.tile.Tile;
+import net.rhys.game.objects.tile.TileCoordinate;
+import net.rhys.gameengine.render.ERenderer;
+
 
 public class GameLevel {
 
@@ -33,7 +32,7 @@ public class GameLevel {
 	
 	protected void loadLevel() {
 		try {
-			BufferedImage image = ImageIO.read(LevelT1.class.getResource(path));
+			BufferedImage image = ImageIO.read(GameLevel.class.getResource(path));
 			width = image.getWidth();
 			height = image.getHeight();
 			tiles = new int[width*height];
@@ -52,7 +51,7 @@ public class GameLevel {
 		
 	}
 	
-	public void render(int xScroll, int yScroll, GameRenderer graphics) {
+	public void render(int xScroll, int yScroll, ERenderer graphics) {
 		graphics.xOffset = xScroll;
 		graphics.yOffset = yScroll;
 		int x0 = xScroll >> 4,

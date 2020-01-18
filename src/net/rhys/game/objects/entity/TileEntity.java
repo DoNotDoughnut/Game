@@ -1,23 +1,23 @@
-package rhys.game.objects.entity;
+package net.rhys.game.objects.entity;
 
 import java.util.ArrayList;
 
-import rhys.game.input.GameKeyListener;
-import rhys.game.input.GameMouseListener;
-import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.tile.Tile;
-import rhys.game.objects.tile.TileCoordinate;
+import net.rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.tile.Tile;
+import net.rhys.game.objects.tile.TileCoordinate;
+import net.rhys.gameengine.input.EKeyInput;
+import net.rhys.gameengine.input.EMouseInput;
 
 public class TileEntity extends Entity {
 	
 	protected GameLevel level;
-	protected GameKeyListener keyInput;
-	protected GameMouseListener mouseInput;
+	protected EKeyInput keyInput;
+	protected EMouseInput mouseInput;
 	protected TileCoordinate tilePos;
 	
 	private static ArrayList<TileEntity> tiles = new ArrayList<>();
 	
-	public TileEntity(GameLevel level, GameKeyListener keyInput, GameMouseListener mouseInput, TileCoordinate tilePos) {
+	public TileEntity(GameLevel level, EKeyInput keyInput, EMouseInput mouseInput, TileCoordinate tilePos) {
 		this.level=level;
 		this.keyInput=keyInput;
 		this.mouseInput=mouseInput;

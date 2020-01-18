@@ -1,8 +1,9 @@
-package rhys.game.objects.entity;
+package net.rhys.game.objects.entity;
 
 import java.util.Random;
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.level.GameLevel;
+
+import net.rhys.game.objects.level.GameLevel;
+import net.rhys.gameengine.render.ERenderer;
 
 public abstract class Entity {
 	
@@ -18,7 +19,7 @@ public abstract class Entity {
 		
 	}
 	
-	public void render(GameRenderer graphics) {
+	public void render(ERenderer graphics) {
 		
 	}
 	

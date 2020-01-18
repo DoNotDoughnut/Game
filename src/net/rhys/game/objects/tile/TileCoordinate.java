@@ -1,6 +1,6 @@
-package rhys.game.objects.tile;
+package net.rhys.game.objects.tile;
 
-import rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.level.GameLevel;
 
 public class TileCoordinate {
 	

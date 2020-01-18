@@ -1,14 +1,14 @@
-package rhys.game.objects.gui;
+package net.rhys.game.objects.gui;
 
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.entity.Entity;
-import rhys.game.objects.sprite.Sprite;
+import net.rhys.game.objects.entity.Entity;
+import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.texture.ETexture;
 
 public class GUIComponent extends Entity {
 	
 	public int x, y, width, height;
 	public final int startX, startY;
-	protected Sprite sprite;
+	protected ETexture texture;
 	
 	public GUIComponent(int x, int y) {
 		this.startX = x;
@@ -23,17 +23,17 @@ public class GUIComponent extends Entity {
 		this.height=height;
 	}
 	
-	public GUIComponent(Sprite sprite, int x, int y, int width, int height) {
+	public GUIComponent(ETexture texture, int x, int y, int width, int height) {
 		this(x, y, width, height);
-		this.sprite = sprite;
+		this.texture = texture;
 	}
 	
 	public void update() {
 		
 	}
 	
-	public void render(GameRenderer graphics) {
-		graphics.render(x+graphics.xOffset, y+graphics.yOffset, sprite, false);
+	public void render(ERenderer graphics) {
+		graphics.render(x+graphics.xOffset, y+graphics.yOffset, texture, false);
 	}
 	
 	public void spawn() {

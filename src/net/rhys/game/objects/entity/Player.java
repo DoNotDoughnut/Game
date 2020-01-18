@@ -1,17 +1,17 @@
-package rhys.game.objects.entity;
+package net.rhys.game.objects.entity;
 
-import rhys.game.input.GameKeyListener;
-import rhys.game.input.GameMouseListener;
-import rhys.game.objects.gui.GUIManager;
+import net.rhys.game.objects.gui.GUIManager;
+import net.rhys.gameengine.input.EKeyInput;
+import net.rhys.gameengine.input.EMouseInput;
 
 public abstract class Player extends Mob {
 	
 	public int userID;
-	protected GameKeyListener keyInput;
-	protected GameMouseListener mouseInput;
+	protected EKeyInput keyInput;
+	protected EMouseInput mouseInput;
 	protected GUIManager gui;
 	
-	public Player(GameKeyListener keyInput, GameMouseListener mouseInput, GUIManager gui) {
+	public Player(EKeyInput keyInput, EMouseInput mouseInput, GUIManager gui) {
 		super();
 		this.mouseInput = mouseInput;
 		this.keyInput = keyInput;

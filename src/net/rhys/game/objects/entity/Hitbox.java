@@ -1,7 +1,7 @@
-package rhys.game.objects.entity;
+package net.rhys.game.objects.entity;
 
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.tile.Tile;
+import net.rhys.game.objects.tile.Tile;
+import net.rhys.gameengine.render.ERenderer;
 
 public class Hitbox {
 	
@@ -60,7 +60,7 @@ public class Hitbox {
 	}
 
 	
-	public void renderHitbox(GameRenderer gg) {
+	public void renderHitbox(ERenderer gg) {
 		for (int y = this.y; y <= this.y+height; y++) {
 			for (int x = this.x; x <= this.x+width; x++) {
 				
@@ -76,11 +76,11 @@ public class Hitbox {
 		}
 	}
 
-	public int getSpriteX() {
+	public int getTextureX() {
 		return x-wOffset+1;
 	}
 	
-	public int getSpriteY() {
+	public int getTextureY() {
 		return y-hOffset+1;
 	}
 

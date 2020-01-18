@@ -1,23 +1,22 @@
-package rhys.game.objects.gui.components;
+package net.rhys.game.objects.gui.components;
 
-import java.awt.Color;
 import java.awt.Font;
 
-import rhys.game.main.GameRenderer;
-import rhys.game.objects.entity.entities.GameText;
-import rhys.game.objects.gui.GUIComponent;
+import net.rhys.game.objects.gui.GUIComponent;
+import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.render.EText;
 
 public class GUILabel extends GUIComponent {
 
 	public String text;
-	public GameText textbox;
-	private int scale;
+	public EText textbox;
+	private ERenderer graphics;
 	
-	public GUILabel(int x, int y, Font font, Color color, String text) {
+	public GUILabel(int x, int y, Font font, int color, String text, ERenderer graphics) {
 		super(x,y);
 		this.text = text;
-		textbox = new GameText(x, y, font, color, text);
-		scale = textbox.getScale();
+		this.graphics = graphics;
+		textbox = new EText(x, y, font, color, text);
 	}
 	
 	public void update() {
@@ -25,7 +24,7 @@ public class GUILabel extends GUIComponent {
 			textbox.text = text;
 	}
 	
-	public void render(GameRenderer graphics) {
+	public void render(ERenderer graphics) {
 		//Leave here to override
 	}
 	
@@ -40,15 +39,15 @@ public class GUILabel extends GUIComponent {
 	}
 	
 	public void move(int newX, int newY) {
-		x += newX*scale;
-		y += newY*scale;
+		x += newX*graphics.scale;
+		y += newY*graphics.scale;
 		textbox.x = x;
 		textbox.y = y;
 	}
 	
 	public void resetPos() {
-		x = startX*scale;
-		y = startY*scale;
+		x = startX*graphics.scale;
+		y = startY*graphics.scale;
 		textbox.x = startX;
 		textbox.y = startY;
 	}

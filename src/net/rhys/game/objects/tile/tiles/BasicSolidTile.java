@@ -1,12 +1,12 @@
-package rhys.game.objects.tile.tiles;
+package net.rhys.game.objects.tile.tiles;
 
-import rhys.game.objects.sprite.Sprite;
-import rhys.game.objects.tile.Tile;
+import net.rhys.game.objects.tile.Tile;
+import net.rhys.gameengine.texture.ETexture;
 
 public class BasicSolidTile extends Tile {
 
-	public BasicSolidTile(Sprite sprite) {
-		super(sprite);
+	public BasicSolidTile(ETexture texture) {
+		super(texture);
 	}
 	
 	public boolean isSolid() {

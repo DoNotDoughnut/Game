@@ -1,26 +1,31 @@
-package rhys.game.main;
+package net.rhys.game;
 
 import java.awt.Canvas;
-import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.FontFormatException;
 import java.awt.Graphics;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+import java.io.IOException;
+
 import javax.swing.JFrame;
-import rhys.game.input.GameKeyListener;
-import rhys.game.input.GameMouseListener;
-import rhys.game.objects.entity.entities.GameText;
-import rhys.game.objects.entity.entities.PlayerBlue;
-import rhys.game.objects.entity.entities.ScreenFocus;
-import rhys.game.objects.gui.GUIManager;
-import rhys.game.objects.gui.GUIPanel;
-import rhys.game.objects.gui.components.GUILabel;
-import rhys.game.objects.gui.components.GUITitleBar;
-import rhys.game.objects.level.GameLevel;
-import rhys.game.objects.level.levels.PlatformLevel;
-import rhys.game.objects.sprite.Sprite;
-import rhys.game.objects.sprite.SpriteSheet;
+
+import net.rhys.game.objects.entity.entities.PlayerBlue;
+import net.rhys.game.objects.entity.entities.ScreenFocus;
+import net.rhys.game.objects.gui.GUIManager;
+import net.rhys.game.objects.gui.GUIPanel;
+import net.rhys.game.objects.gui.components.GUILabel;
+import net.rhys.game.objects.gui.components.GUITitleBar;
+import net.rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.level.levels.PlatformLevel;
+import net.rhys.gameengine.input.EKeyInput;
+import net.rhys.gameengine.input.EMouseInput;
+import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.render.EText;
+import net.rhys.gameengine.texture.ETexture;
+import net.rhys.gameengine.texture.ETextureSheet;
 
 public class Game extends Canvas implements Runnable {
 
@@ -35,8 +40,13 @@ public class Game extends Canvas implements Runnable {
 							scale = 2;
 	
 	public static final Dimension resolution = new Dimension(width*scale, height*scale);
+
+	public static final String sheets = "/net/rhys/game/resources/spritesheets/";
 	
 	private static GUILabel playerXL, playerYL;
+	
+	public static Font dialogueFont, guiFont;
+
 	
 	private boolean running = false;
 	private Thread thread;
@@ -45,12 +55,12 @@ public class Game extends Canvas implements Runnable {
 	private int[] pixels = ((DataBufferInt) image.getRaster().getDataBuffer()).getData(); //image data
 	
 	public JFrame frame;
-	public GameRenderer graphics;
+	public ERenderer graphics;
 	public GameLevel currentLevel;
 	public ScreenFocus focus;
 	public PlayerBlue player;
-	public GameKeyListener keyInput;
-	public GameMouseListener mouseInput;
+	public EKeyInput keyInput;
+	public EMouseInput mouseInput;
 	public GUIManager guiManager;
 	
 	public int ups, fps;
@@ -60,7 +70,7 @@ public class Game extends Canvas implements Runnable {
 		guiManager.update();
 		keyInput.update();
 		player.update();
-		Sprite.update();
+		ETexture.update();
 		playerXL.text="Player X: "+player.hitbox.x;
 		playerYL.text="Player Y: "+player.hitbox.y;
 	}
@@ -83,7 +93,7 @@ public class Game extends Canvas implements Runnable {
 		
 		g.drawImage(image, 0, 0, getWidth(), getHeight(), null);
 		
-		GameText.render(g);
+		EText.render(g);
 		
 		g.dispose();
 		bs.show();
@@ -108,19 +118,29 @@ public class Game extends Canvas implements Runnable {
 		
 		setPreferredSize(resolution);
 		
-		graphics = new GameRenderer(width, height, scale); // Establishes game renderer
+		graphics = new ERenderer(width, height, scale); // Establishes game renderer
 		
 		currentLevel = PlatformLevel.level; //Set the level
 		
-		GameText.init(graphics); //Initialize the text renderer so it is ready to render text
+		try {
+			Font basicFont = Font.createFont(Font.TRUETYPE_FONT, Game.class.getClassLoader().getResourceAsStream("net/rhys/gameengine/render/text/monogram.ttf"));
+			guiFont = basicFont.deriveFont((float) (12*scale));
+			dialogueFont = basicFont.deriveFont((float) (16*scale));
+		} catch (FontFormatException | IOException e) {
+			e.printStackTrace();
+		}
+		
+		
+		
+		//Initialize the text renderer so it is ready to render text
 		
 		//Create and add input listeners
 		
-		keyInput = new GameKeyListener();
+		keyInput = new EKeyInput();
 				
 		addKeyListener(keyInput); 
 				
-		mouseInput = new GameMouseListener(graphics);
+		mouseInput = new EMouseInput(graphics);
 				
 		addMouseListener(mouseInput);
 		addMouseMotionListener(mouseInput);
@@ -130,17 +150,17 @@ public class Game extends Canvas implements Runnable {
 		
 		//Create the GUI panel
 		
-		GUIPanel panel = new GUIPanel(0,0,100,100, new Sprite(new SpriteSheet("/rhys/game/resources/spritesheets/testgui.png", 1, 1, 100), 0, 0, 100, 1), "Test Panel :)"); 
+		GUIPanel panel = new GUIPanel(0,0,100,100, new ETexture(new ETextureSheet("/net/rhys/game/resources/spritesheets/testgui.png", 1, 1, 100), 0, 0, 100, 1), "Test Panel :)"); 
 		
 		//Initialize and add components to the panel.
 		
-		panel.add(new GUITitleBar(panel, mouseInput, graphics, 0x3F3F3F));
+		panel.add(new GUITitleBar(panel, guiFont, 0x3F3F3F, mouseInput, graphics));
 		
-		panel.add(playerXL = new GUILabel(5*graphics.scale, 40*graphics.scale, GameText.guiFont, Color.black, "Player X: ")); 
-		panel.add(playerYL = new GUILabel(5*graphics.scale, 56*graphics.scale, GameText.guiFont, Color.black, "Player Y: "));
+		panel.add(playerXL = new GUILabel(5*graphics.scale, 40*graphics.scale, guiFont, 0x000000, "Player X: ", graphics)); 
+		panel.add(playerYL = new GUILabel(5*graphics.scale, 56*graphics.scale, guiFont, 0x000000, "Player Y: ", graphics));
 		
-		panel.add(new GUILabel(5*graphics.scale, 18*graphics.scale, GameText.guiFont, Color.black, "Hello!! I am a")); 
-		panel.add(new GUILabel(5*graphics.scale, 28*graphics.scale, GameText.dialogueFont, Color.black, "test GUI label."));
+		panel.add(new GUILabel(5*graphics.scale, 18*graphics.scale, guiFont, 0x000000, "Hello!! I am a", graphics)); 
+		panel.add(new GUILabel(5*graphics.scale, 28*graphics.scale, dialogueFont, 0x000000, "test GUI label.", graphics));
 		
 		//Add the panel to the GUI manager
 		

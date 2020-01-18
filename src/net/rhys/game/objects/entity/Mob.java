@@ -1,6 +1,6 @@
-package rhys.game.objects.entity;
+package net.rhys.game.objects.entity;
 
-import rhys.game.objects.sprite.Sprite;
+import net.rhys.gameengine.texture.ETexture;
 
 public abstract class Mob extends Entity {
 
@@ -10,7 +10,7 @@ public abstract class Mob extends Entity {
 
 	public float speed, slow;
 	public boolean movementLock = false;
-	public Sprite sprite;
+	public ETexture texture;
 	public Hitbox hitbox;
 	protected int dir = 0;
 	protected boolean moving = false;
