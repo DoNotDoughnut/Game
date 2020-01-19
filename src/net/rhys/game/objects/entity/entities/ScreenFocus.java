@@ -2,7 +2,7 @@ package net.rhys.game.objects.entity.entities;
 
 import net.rhys.game.objects.entity.Entity;
 import net.rhys.game.objects.entity.Mob;
-import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.rendering.ERenderer;
 
 public class ScreenFocus extends Entity {
 

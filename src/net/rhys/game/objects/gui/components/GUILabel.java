@@ -3,8 +3,8 @@ package net.rhys.game.objects.gui.components;
 import java.awt.Font;
 
 import net.rhys.game.objects.gui.GUIComponent;
-import net.rhys.gameengine.render.ERenderer;
-import net.rhys.gameengine.render.EText;
+import net.rhys.gameengine.rendering.ERenderer;
+import net.rhys.gameengine.rendering.text.EText;
 
 public class GUILabel extends GUIComponent {
 

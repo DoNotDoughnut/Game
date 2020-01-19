@@ -1,8 +1,9 @@
 package net.rhys.game;
 
-import net.rhys.game.objects.level.GameLevel;
+import net.rhys.game.objects.level.levels.MainMenuLevel;
 import net.rhys.game.objects.level.levels.PlatformLevel;
 import net.rhys.gameengine.EEngine;
+import net.rhys.gameengine.level.ELevel;
 /**
  * 
  * @author Rhys Holloway
@@ -12,7 +13,9 @@ import net.rhys.gameengine.EEngine;
  */
 public class Game extends EEngine {
 	
-	public GameLevel currentLevel;
+	
+	public static ELevel platformLevel;
+	public static ELevel mainMenuLevel;
 	
 	public void input() {
 		keyInput.update();
@@ -27,9 +30,12 @@ public class Game extends EEngine {
 	}
 	
 	public Game() {
-		super("Game", 480, 480/16*9, 2);
+		super("Game", 480, 480/16*9, 3, "/res/");
 		
-		currentLevel =  new PlatformLevel(this);
+		platformLevel = new PlatformLevel(this);
+		mainMenuLevel = new MainMenuLevel(this);
+		
+		currentLevel =  new MainMenuLevel(this);
 
 	}
 	

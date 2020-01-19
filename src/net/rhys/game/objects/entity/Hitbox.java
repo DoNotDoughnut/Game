@@ -1,6 +1,6 @@
 package net.rhys.game.objects.entity;
 
-import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.rendering.ERenderer;
 
 public class Hitbox {
 	

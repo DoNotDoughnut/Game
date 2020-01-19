@@ -2,26 +2,26 @@ package net.rhys.game.objects.entity;
 
 import java.util.ArrayList;
 
-import net.rhys.game.objects.level.GameLevel;
-import net.rhys.game.objects.tile.Tile;
-import net.rhys.game.objects.tile.TileCoordinate;
 import net.rhys.gameengine.input.EKeyInput;
 import net.rhys.gameengine.input.EMouseInput;
+import net.rhys.gameengine.level.ELevel;
+import net.rhys.gameengine.tile.ETile;
 
 public class TileEntity extends Entity {
 	
-	protected GameLevel level;
+	protected ELevel level;
 	protected EKeyInput keyInput;
 	protected EMouseInput mouseInput;
-	protected TileCoordinate tilePos;
+	public int x,y;
 	
 	private static ArrayList<TileEntity> tiles = new ArrayList<>();
 	
-	public TileEntity(GameLevel level, EKeyInput keyInput, EMouseInput mouseInput, TileCoordinate tilePos) {
+	public TileEntity(ELevel level, EKeyInput keyInput, EMouseInput mouseInput, int x, int y) {
 		this.level=level;
 		this.keyInput=keyInput;
 		this.mouseInput=mouseInput;
-		this.tilePos=tilePos;
+		this.x=x;
+		this.y=y;
 	}
 
 	public void update() {
@@ -40,8 +40,8 @@ public class TileEntity extends Entity {
 	}
 	
 	public boolean clicked() {
-		return((tilePos.x + Tile.size > (mouseInput.getX() + mouseInput.graphics.xOffset) && tilePos.x < mouseInput.getX() + mouseInput.graphics.xOffset) && 
-			   (tilePos.y + Tile.size > (mouseInput.getY() + mouseInput.graphics.yOffset) && tilePos.y < mouseInput.getY() + mouseInput.graphics.yOffset));
+		return((ETile.size * x + ETile.size > (mouseInput.getX() + mouseInput.graphics.xOffset) && ETile.size * x < mouseInput.getX() + mouseInput.graphics.xOffset) && 
+			   (ETile.size * y + ETile.size > (mouseInput.getY() + mouseInput.graphics.yOffset) && ETile.size * y < mouseInput.getY() + mouseInput.graphics.yOffset));
 	}
 	
 }

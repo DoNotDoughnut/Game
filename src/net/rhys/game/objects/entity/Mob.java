@@ -1,6 +1,6 @@
 package net.rhys.game.objects.entity;
 
-import net.rhys.gameengine.texture.ETexture;
+import net.rhys.gameengine.rendering.texture.ETexture;
 
 public abstract class Mob extends Entity {
 

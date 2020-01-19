@@ -2,13 +2,13 @@ package net.rhys.game.objects.entity;
 
 import java.util.Random;
 
-import net.rhys.game.objects.level.GameLevel;
-import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.level.ELevel;
+import net.rhys.gameengine.rendering.ERenderer;
 
 public abstract class Entity {
 	
 	public boolean alive = false;
-	protected GameLevel level;
+	protected ELevel level;
 	protected final Random random = new Random();
 	
 	public Entity() {
@@ -33,7 +33,7 @@ public abstract class Entity {
 		alive = false;
 	}
 
-	public void init(GameLevel level) {
+	public void init(ELevel level) {
 		this.level=level;
 	}
 	

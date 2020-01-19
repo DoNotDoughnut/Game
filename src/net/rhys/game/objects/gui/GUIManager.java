@@ -2,7 +2,7 @@ package net.rhys.game.objects.gui;
 
 import java.util.ArrayList;
 
-import net.rhys.gameengine.render.ERenderer;
+import net.rhys.gameengine.rendering.ERenderer;
 
 public class GUIManager {
 	

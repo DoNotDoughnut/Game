@@ -5,10 +5,9 @@ import java.awt.Font;
 import net.rhys.game.objects.gui.GUIComponent;
 import net.rhys.game.objects.gui.GUIPanel;
 import net.rhys.gameengine.EEngine;
-import net.rhys.gameengine.input.EMouseInput;
-import net.rhys.gameengine.render.ERenderer;
-import net.rhys.gameengine.texture.ETexture;
-import net.rhys.gameengine.texture.ETextureSheet;
+import net.rhys.gameengine.rendering.ERenderer;
+import net.rhys.gameengine.rendering.texture.ETexture;
+import net.rhys.gameengine.rendering.texture.ETextureSheet;
 
 public class GUITitleBar extends GUIComponent {
 
@@ -18,16 +17,16 @@ public class GUITitleBar extends GUIComponent {
 	
 	protected static int barHeight = 9, buttonSize = 6;
 	
-	private ETextureSheet buttons = new ETextureSheet(EEngine.resources+"spritesheets/buttons.png", 2, 1, 6);
-	private ETexture closeTexture = new ETexture(buttons, 1, 0, 6, 1);
-	private ETexture moveTexture = new ETexture(buttons, 0, 0, 6, 1);
+	private ETextureSheet buttons = new ETextureSheet(EEngine.resources+"spritesheets/buttons.png", 6, 6);
+	private ETexture closeTexture = new ETexture(buttons, 1, 0);
+	private ETexture moveTexture = new ETexture(buttons);
 	
-	public GUITitleBar(GUIPanel panel, Font font, int color, EMouseInput mouseInput, ERenderer graphics) {
-		super(new ETexture(color, panel.width, barHeight), 0, 0, panel.width, barHeight);
+	public GUITitleBar(GUIPanel panel, Font font, int color, EEngine engine) {
+		super(new ETexture(color, panel.width, barHeight), panel.x, panel.y, panel.width, barHeight);
 		this.panel=panel;
-		windowLabel = new GUILabel(x+2, y+7, graphics.scale, font, 0xFFFFFF, panel.name);
-		moveButton = new MoveButton(this, mouseInput, graphics, moveTexture, x, width, y);
-		closeButton = new CloseButton(this, mouseInput, graphics, closeTexture, x, width, y);
+		windowLabel = new GUILabel(panel.x+2, panel.y+7, engine.graphics.scale, font, 0xFFFFFF, panel.name);
+		moveButton = new MoveButton(moveTexture, panel.x, panel.y, width, engine, this);
+		closeButton = new CloseButton(closeTexture, panel.x, panel.y, width, engine, this);
 	}
 	
 	protected void closePanel() {
@@ -84,8 +83,8 @@ class CloseButton extends GUIButton {
 	
 	private GUITitleBar titleBar;
 	
-	public CloseButton(GUITitleBar titleBar, EMouseInput mouseInput, ERenderer graphics, ETexture sprite, int x, int width, int y) {
-		super(mouseInput, graphics, sprite, (x+width)-1*(2+GUITitleBar.buttonSize), y+1, 6, 6);
+	public CloseButton(ETexture texture, int x, int y, int size, EEngine engine, GUITitleBar titleBar) {
+		super(engine, texture, (x+size)-1*(2+GUITitleBar.buttonSize), y+1, 6, 6);
 		this.titleBar = titleBar;
 	}
 	
@@ -102,10 +101,9 @@ class MoveButton extends GUIButton {
 	private boolean inAction = false;
 	private GUITitleBar titleBar;
 
-	public MoveButton(GUITitleBar titleBar, EMouseInput mouseInput, ERenderer graphics, ETexture sprite, int x, int width, int y) {
-		super(mouseInput, graphics, sprite, (x+width)-2*(2+GUITitleBar.buttonSize), y+1, 6, 6);
+	public MoveButton(ETexture texture, int x, int y, int size, EEngine engine, GUITitleBar titleBar) {
+		super(engine, texture, (x+size)-2*(2+GUITitleBar.buttonSize), y+1, 6, 6);
 		this.titleBar=titleBar;
-
 	}
 
 	public void update() {
@@ -117,10 +115,10 @@ class MoveButton extends GUIButton {
 			
 		}
 		
-		if(inAction&&mouseInput.clicking) {//Click somewhere other than button action
+		if(inAction&&engine.mouseInput.clicking) {//Click somewhere other than button action
 			
-			int newX = mouseInput.getX() - origX;
-			int newY = mouseInput.getY() - origY;
+			int newX = engine.mouseInput.getX() - origX;
+			int newY = engine.mouseInput.getY() - origY;
 			
 			titleBar.movePanelPos(newX, newY);
 			
@@ -129,14 +127,14 @@ class MoveButton extends GUIButton {
 		}
 		
 		if(!inAction&&clicked()) //First click of button
-			setCoords(mouseInput.getX(), mouseInput.getY(), true);
+			setCoords(engine.mouseInput.getX(), engine.mouseInput.getY(), true);
 	}
 	
 	private void setCoords(int newX, int newY, boolean inAction) {
 		origX=newX;
 		origY=newY;
 		this.inAction=inAction;
-		mouseInput.clicking = false;
+		engine.mouseInput.clicking = false;
 	}
 		
 	

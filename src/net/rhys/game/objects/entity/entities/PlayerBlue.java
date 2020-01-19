@@ -3,13 +3,13 @@ package net.rhys.game.objects.entity.entities;
 import net.rhys.game.objects.entity.Hitbox;
 import net.rhys.game.objects.entity.Player;
 import net.rhys.game.objects.gui.GUIManager;
-import net.rhys.game.objects.level.GameLevel;
 import net.rhys.gameengine.EEngine;
 import net.rhys.gameengine.input.EKeyInput;
 import net.rhys.gameengine.input.EMouseInput;
-import net.rhys.gameengine.render.ERenderer;
-import net.rhys.gameengine.texture.ETexture;
-import net.rhys.gameengine.texture.ETextureSheet;
+import net.rhys.gameengine.level.ELevel;
+import net.rhys.gameengine.rendering.ERenderer;
+import net.rhys.gameengine.rendering.texture.ETexture;
+import net.rhys.gameengine.rendering.texture.ETextureSheet;
 
 
 public class PlayerBlue extends Player {
@@ -27,7 +27,7 @@ public class PlayerBlue extends Player {
 						 playerBlue_run = new PlayerBlueTexture(4, 7, 2);
 				  
 	
-	public PlayerBlue(GameLevel level, EKeyInput keyInput, EMouseInput mouseInput, GUIManager gui,  int x, int y, int pW, int pH, int pWO, int pHO) {
+	public PlayerBlue(ELevel level, EKeyInput keyInput, EMouseInput mouseInput, GUIManager gui,  int x, int y, int pW, int pH, int pWO, int pHO) {
 		super(keyInput, mouseInput, gui);
 		this.level=level;
 		texture = playerBlue_idle;
@@ -134,10 +134,10 @@ public class PlayerBlue extends Player {
 
 class PlayerBlueTexture extends ETexture {
 
-	public static ETextureSheet playerBlue = new ETextureSheet(EEngine.resources+"spritesheets/player.png", 7, 5, 32);
+	public static ETextureSheet playerBlue = new ETextureSheet(EEngine.resources+"spritesheets/player.png", 32, 32);
 	
 	public PlayerBlueTexture(int y, int variants, int idleTime) {
-		super(playerBlue, 0, y, 32, 32, variants, true, true, idleTime);
+		super(playerBlue, 0, y, variants, idleTime);
 	}
 
 }

@@ -3,8 +3,8 @@ package net.rhys.game.objects.gui;
 import java.util.ArrayList;
 
 import net.rhys.game.objects.entity.Entity;
-import net.rhys.gameengine.render.ERenderer;
-import net.rhys.gameengine.texture.ETexture;
+import net.rhys.gameengine.rendering.ERenderer;
+import net.rhys.gameengine.rendering.texture.ETexture;
 
 public class GUIPanel extends Entity {
 	
@@ -12,16 +12,16 @@ public class GUIPanel extends Entity {
 	public int x, y, width, height;
 	public final int startX, startY;
 	public String name;
-	private ETexture texture;
+	public ETexture texture;
 	
-	public GUIPanel(int x, int y, int width, int height, ETexture texture, String name) {
+	public GUIPanel(int x, int y, ETexture texture, String name) {
 		components = new ArrayList<>();
 		this.startX = x;
 		this.startY = y;
 		this.x = x;
 		this.y = y;
-		this.width=width;
-		this.height=height;
+		this.width=texture.width;
+		this.height=texture.height;
 		this.texture = texture;
 		this.name = name;
 	}

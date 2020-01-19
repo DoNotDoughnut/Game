@@ -1,8 +1,8 @@
 package net.rhys.game.objects.gui;
 
 import net.rhys.game.objects.entity.Entity;
-import net.rhys.gameengine.render.ERenderer;
-import net.rhys.gameengine.texture.ETexture;
+import net.rhys.gameengine.rendering.ERenderer;
+import net.rhys.gameengine.rendering.texture.ETexture;
 
 public class GUIComponent extends Entity {
 	
