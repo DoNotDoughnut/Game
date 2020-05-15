@@ -1,0 +1,18 @@
+{
+	"width":20,
+	"height":10,
+	
+	"map": 
+	[
+	"dirt", "dirt", 	"dirt", 	"dirt", 	"dirt", 	"dirt", 	"dirt", 	"dirt",		"dirt", 	"dirt", 	"dirt", 	"dirt", 	"dirt", 	"dirt",     "dirt", 	"dirt", 	"dirt", 	 "dirt", 	 "dirt", 	 "stone", 
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop",  "grasstop", "grasstop", "stone", 
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop",  "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop",  "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop",  "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop",  "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "stone_cap", "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "stone", 	 "grasstop", "grasstop", "stone",
+	"dirt", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "grasstop", "stone", 	 "grasstop", "grasstop", "stone", 
+	"dirt", "grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	"grass", 	 "grass", 	 "grass", 	 "stone"
+	 ]
+}
